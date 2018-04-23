@@ -6,18 +6,30 @@
 namespace model {
 
 class SaleLog {
-    std::vector<std::shared_ptr<integration::SaleLogObserver>> observers;
+    std::vector<std::unique_ptr<integration::SaleLogObserver>> observers;
 
-    public:
-    void observe(std::shared_ptr<integration::SaleLogObserver> observer)
+public:
+    SaleLog() : observers() {}
+    SaleLog(SaleLog&& other)
     {
-        observers.push_back(observer);
+        std::swap(observers, other.observers);
     }
 
-    void append(const integration::SaleEvent& event) const
+    // This is a non-copy type because of std::unique_ptr!
+    SaleLog(const SaleLog&) = delete;
+    SaleLog& operator=(const SaleLog&) = delete;
+
+    void observe(std::unique_ptr<integration::SaleLogObserver> observer)
     {
-        for (auto observer : observers)
+        //observers.push_back(std::move(observer));
+    }
+
+    void append(const integration::SaleEvent& event)
+    {
+        /*
+        for (auto& observer : observers)
             observer->handleSaleEvent(event);
+            */
     }
 };
 

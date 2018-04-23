@@ -18,10 +18,10 @@ class Controller {
     //Sale sale;
 
     public:
-    Controller(model::ShoppingCartFactory cartFactory, model::DiscountRules discountRules, model::SaleLog saleLog)
+    Controller(model::ShoppingCartFactory cartFactory, model::DiscountRules discountRules, model::SaleLog&& saleLog)
         : cartFactory(cartFactory)
         , discountRules(discountRules)
-        , saleLog(saleLog)
+        , saleLog(std::move(saleLog))
         , shoppingCart({})
         {}
 

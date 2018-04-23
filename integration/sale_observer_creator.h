@@ -6,11 +6,11 @@
 
 namespace integration {
 
-std::vector<std::shared_ptr<SaleLogObserver>> createSaleObservers()
+std::vector<std::unique_ptr<SaleLogObserver>> createSaleObservers()
 {
-    std::vector<std::shared_ptr<SaleLogObserver>> observers;
+    std::vector<std::unique_ptr<SaleLogObserver>> observers;
 
-    observers.push_back(std::make_shared<RecieptPrinter>());
+    observers.push_back(std::make_unique<RecieptPrinter>());
 
     return observers;
 }

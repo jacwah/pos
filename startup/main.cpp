@@ -16,8 +16,8 @@ model::SaleLog setupSaleLogging()
     auto observers = integration::createSaleObservers();
     model::SaleLog log;
 
-    for (auto observer : observers)
-        log.observe(observer);
+    for (auto& observer : observers)
+        log.observe(std::move(observer));
 
     return log;
 }
@@ -29,7 +29,7 @@ void main()
     model::DiscountRules discountRules(catalogCreator);
     model::ShoppingCartFactory cartFactory(catalogCreator);
     model::SaleLog saleLog = setupSaleLogging();
-    controller::Controller controller(cartFactory, discountRules, saleLog);
+    controller::Controller controller(cartFactory, discountRules, std::move(saleLog));
 
     if (auto item = itemCatalog.find(0))
         std::cout << *item << std::endl;
