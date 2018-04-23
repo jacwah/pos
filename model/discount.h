@@ -1,17 +1,19 @@
 #pragma once
 
 #include "integration/dto.h"
+#include "util/percentage.h"
+#include "util/amount.h"
 
 namespace model {
 
 class Discount {
-    integration::Percentage percentage;
+    util::Percentage percentage;
 
     public:
     Discount() : percentage(0) {}
-    Discount(integration::Percentage percentage) : percentage(percentage) {}
+    Discount(util::Percentage percentage) : percentage(percentage) {}
 
-    integration::Amount applyTo(integration::Amount amount) const
+    util::Amount applyTo(util::Amount amount) const
     {
         return percentage.deductFrom(amount);
     }

@@ -31,7 +31,7 @@ class ShoppingCart {
         if (item)
             items.push_back(*item);
 
-        return ShoppingCartSummary(item, integration::Amount(0));
+        return ShoppingCartSummary(item, util::Amount(0));
     }
 };
 

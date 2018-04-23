@@ -6,6 +6,8 @@
 #include "integration/catalog_creator.h"
 #include "integration/dto.h"
 #include "integration/sale_observer_creator.h"
+#include "util/amount.h"
+#include "util/percentage.h"
 
 namespace startup {
 
@@ -42,8 +44,8 @@ void main()
     model::Discount d0 = discountRules.getDiscountFor(0);
     model::Discount d1 = discountRules.getDiscountFor(1);
 
-    std::cout << d0.applyTo(integration::Amount(1.0)) << std::endl;
-    std::cout << d1.applyTo(integration::Amount(1.0)) << std::endl;
+    std::cout << d0.applyTo(util::Amount(1.0)) << std::endl;
+    std::cout << d1.applyTo(util::Amount(1.0)) << std::endl;
 
     saleLog.append(integration::SaleEvent(0));
     saleLog.append(integration::SaleEvent(1));
