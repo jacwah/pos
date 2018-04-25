@@ -31,8 +31,13 @@ class Item {
     std::string description;
     util::Amount price;
 
-    public:
+public:
     Item(std::string description, util::Amount price) : description(description), price(price) {}
+
+    Item(const Item& other)
+        : description(other.description)
+        , price(other.price)
+    {}
 
     const std::string& getDescription() const
     {
@@ -48,7 +53,7 @@ class Item {
 class SaleEvent {
     int time;
 
-    public:
+public:
     SaleEvent(int time) : time(time) {}
 
     int getTime() const

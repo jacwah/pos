@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "integration/dto.h"
 #include "integration/sale_log_observer.h"
 
@@ -21,15 +23,13 @@ public:
 
     void observe(std::unique_ptr<integration::SaleLogObserver> observer)
     {
-        //observers.push_back(std::move(observer));
+        observers.push_back(std::move(observer));
     }
 
     void append(const integration::SaleEvent& event)
     {
-        /*
         for (auto& observer : observers)
             observer->handleSaleEvent(event);
-            */
     }
 };
 

@@ -1,22 +1,32 @@
 #pragma once
 
-#include <experimental/optional>
-#include "util/amount.h"
 #include "integration/dto.h"
+#include "util/amount.h"
+#include "util/optional.h"
 
 namespace model {
 
 class ShoppingCartSummary {
-    const std::experimental::optional<integration::Item> lastAddedItem;
-    const util::Amount grossPrice;
+    util::optional<integration::Item> lastAddedItem;
+    util::Amount grossPrice;
 
-    public:
-    ShoppingCartSummary(std::experimental::optional<integration::Item> item, util::Amount grossPrice)
+public:
+    ShoppingCartSummary()
+        : lastAddedItem()
+        , grossPrice(0)
+    {}
+
+    ShoppingCartSummary(util::optional<integration::Item> item, util::Amount grossPrice)
         : lastAddedItem(item)
         , grossPrice(grossPrice)
     {}
 
-    const std::experimental::optional<integration::Item> getLastAddedItem() const
+    ShoppingCartSummary(const ShoppingCartSummary& other)
+        : grossPrice(other.grossPrice)
+        , lastAddedItem(other.lastAddedItem)
+    {}
+
+    const util::optional<integration::Item> getLastAddedItem() const
     {
         return lastAddedItem;
     }
@@ -27,4 +37,19 @@ class ShoppingCartSummary {
     }
 };
 
+}
+
+std::ostream& operator<<(std::ostream& os, const model::ShoppingCartSummary& summary)
+{
+    os << "LastAdded=";
+
+    auto item = summary.getLastAddedItem();
+    if (item)
+        os << *item;
+    else
+        os << "(None)";
+    
+    os << " GrossPrice=" << summary.getGrossPrice();
+
+    return os;
 }

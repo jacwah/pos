@@ -1,5 +1,6 @@
 #include <iostream>
-#include "controller/controller.h"
+#include "view/view.h"
+#include "controller/sale_controller_factory.h"
 #include "model/discount_rules.h"
 #include "model/shopping_cart_factory.h"
 #include "model/sale_log.h"
@@ -29,8 +30,12 @@ void main()
     model::DiscountRules discountRules(catalogCreator);
     model::ShoppingCartFactory cartFactory(catalogCreator);
     model::SaleLog saleLog = setupSaleLogging();
-    controller::Controller controller(cartFactory, discountRules, std::move(saleLog));
+    controller::SaleControllerFactory saleControllerFactory(discountRules, saleLog);
+    view::View view(saleControllerFactory, cartFactory);
 
+    view.simulateUser();
+
+    /*
     if (auto item = itemCatalog.find(0))
         std::cout << *item << std::endl;
     else
@@ -49,6 +54,7 @@ void main()
 
     saleLog.append(integration::SaleEvent(0));
     saleLog.append(integration::SaleEvent(1));
+    */
 }
 
 }
