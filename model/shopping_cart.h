@@ -1,18 +1,27 @@
 #pragma once
 
-#include <vector>
+#include <unordered_map>
 #include "model/shopping_cart_summary.h"
 #include "integration/dto.h"
 #include "integration/item_catalog.h"
 
 namespace model {
 
+struct ItemRecord {
+    integration::Item item;
+    int quantity;
+
+    ItemRecord(integration::Item item, int quantity)
+        : item(item)
+        , quantity(quantity)
+    {}
+};
+
 class ShoppingCart {
-    // TODO: hasmap or something
-    std::vector<integration::Item> items;
+    std::unordered_map<integration::ItemId, ItemRecord> items;
     integration::ItemCatalog& itemCatalog;
 
-    public:
+public:
     ShoppingCart(integration::ItemCatalog& itemCatalog) : itemCatalog(itemCatalog) {}
 
     ShoppingCart& operator=(const ShoppingCart& other)
@@ -28,10 +37,32 @@ class ShoppingCart {
     {
         auto item = itemCatalog.find(id);
 
-        if (item)
-            items.push_back(*item);
+        if (item) {
+            auto iterator = items.find(id);
 
-        return ShoppingCartSummary(item, util::Amount(0));
+            if (iterator == items.end()) {
+                ItemRecord record(*item, quantity);
+                items.emplace(std::make_pair(id, record));
+            } else {
+                iterator->second.quantity += 1;
+            }
+        }
+
+        return ShoppingCartSummary(item, calculateGrossPrice());
+    }
+
+private:
+    util::Amount calculateGrossPrice()
+    {
+        util::Amount sum = 0;
+
+        for (auto keyvalue : items) {
+            auto record = keyvalue.second;
+
+            sum += record.item.getPrice() * record.quantity;
+        }
+
+        return sum;
     }
 };
 

@@ -48,7 +48,7 @@ std::ostream& operator<<(std::ostream& os, const model::ShoppingCartSummary& sum
         os << *item;
     else
         os << "(None)";
-    
+
     os << " GrossPrice=" << summary.getGrossPrice();
 
     return os;

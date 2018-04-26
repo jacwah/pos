@@ -18,6 +18,17 @@ class Amount {
         return value * other;
     }
 
+    Amount operator+(Amount other) const
+    {
+        return value + other.value;
+    }
+
+    Amount& operator+=(Amount other)
+    {
+        value += other.value;
+        return *this;
+    }
+
     explicit operator double() const
     {
         return value;
