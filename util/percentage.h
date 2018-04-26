@@ -20,6 +20,11 @@ class Percentage {
         return amount * (1 - value);
     }
 
+    util::Amount addTo(util::Amount amount) const
+    {
+        return amount * (1 + value);
+    }
+
     explicit operator double() const
     {
         return value;

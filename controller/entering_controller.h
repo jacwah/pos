@@ -18,6 +18,11 @@ public:
     {
         return shoppingCart.addIfValid(id, quantity);
     }
+
+    SaleController finish(SaleControllerFactory factory)
+    {
+        return factory.create(shoppingCart);
+    }
 };
 
 }

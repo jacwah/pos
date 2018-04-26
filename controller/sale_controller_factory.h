@@ -1,6 +1,7 @@
 #pragma once
 
 #include "controller/sale_controller.h"
+#include "model/shopping_cart.h"
 #include "model/sale_log.h"
 #include "model/discount_rules.h"
 
@@ -16,9 +17,14 @@ public:
         , saleLog(saleLog)
     {}
 
-    SaleController create(model::ShoppingCartSummary& shoppingCartSummary)
+    SaleController create(model::ShoppingCart& shoppingCart)
     {
-        return { shoppingCartSummary, discountRules, saleLog };
+        std::vector<model::ItemRecord> items;
+
+        for (auto& id_item : shoppingCart)
+            items.push_back(id_item.second);
+
+        return {items, discountRules, saleLog};
     }
 };
 

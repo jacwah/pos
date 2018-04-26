@@ -3,7 +3,7 @@
 #include "model/discount_rules.h"
 #include "model/sale_log.h"
 #include "model/sale.h"
-#include "model/shopping_cart_summary.h"
+#include "model/shopping_cart.h"
 #include "model/discount_rules.h"
 #include "integration/dto.h"
 #include "util/amount.h"
@@ -18,12 +18,12 @@ class SaleController {
 
 public:
     SaleController(
-            const model::ShoppingCartSummary& shoppingCartSummary,
+            std::vector<model::ItemRecord> items,
             model::DiscountRules& discountRules,
             model::SaleLog& saleLog)
         : discountRules(discountRules)
         , saleLog(saleLog)
-        , sale(shoppingCartSummary)
+        , sale(items)
     {}
 
     util::Amount requestDiscount(integration::CustomerId customerId)

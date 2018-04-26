@@ -34,7 +34,7 @@ public:
             std::cout << "Summary: " << summary << std::endl;
         }
 
-        controller::SaleController saleController = saleControllerFactory.create(summary);
+        controller::SaleController saleController = enteringController.finish(saleControllerFactory);
 
         std::cout << "Net price: " << saleController.getNetPrice() << std::endl;
     }

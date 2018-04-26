@@ -17,8 +17,10 @@ struct ItemRecord {
     {}
 };
 
+typedef std::unordered_map<integration::ItemId, ItemRecord> ItemMap;
+
 class ShoppingCart {
-    std::unordered_map<integration::ItemId, ItemRecord> items;
+    ItemMap items;
     integration::ItemCatalog& itemCatalog;
 
 public:
@@ -51,13 +53,23 @@ public:
         return ShoppingCartSummary(item, calculateGrossPrice());
     }
 
+    ItemMap::const_iterator begin() const
+    {
+        return items.cbegin();
+    }
+
+    ItemMap::const_iterator end() const
+    {
+        return items.cend();
+    }
+
 private:
-    util::Amount calculateGrossPrice()
+    util::Amount calculateGrossPrice() const
     {
         util::Amount sum = 0;
 
-        for (auto keyvalue : items) {
-            auto record = keyvalue.second;
+        for (auto id_item : items) {
+            auto record = id_item.second;
 
             sum += record.item.getPrice() * record.quantity;
         }

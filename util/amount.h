@@ -5,7 +5,8 @@ namespace util {
 class Amount {
     double value;
 
-    public:
+public:
+    Amount() : value(0) {}
     Amount(double value) : value(value) {}
 
     bool operator<=(Amount other) const
