@@ -29,11 +29,17 @@ public:
         controller::EnteringController enteringController(shoppingCartFactory);
 
         for (int i = 0; i < sizeof(itemsToBeEntered) / sizeof(itemsToBeEntered[0]); ++i) {
-            // TODO: "error invalid"
             model::ShoppingCartSummary summary = enteringController.enterItem(
                     itemsToBeEntered[i],
                     quantitiesToBeEntered[i]);
-            std::cout << "Summary: " << summary << std::endl;
+
+            util::optional<integration::Item> item = summary.getLastAddedItem();
+            if (item) {
+                std::cout << "Added: " << *item << std::endl;
+                std::cout << "Gross price: " << summary.getGrossPrice() << std::endl;
+            } else {
+                std::cout << "Item identifier not found!" << std::endl;
+            }
         }
 
         controller::SaleController saleController = enteringController.finish(saleControllerFactory);
