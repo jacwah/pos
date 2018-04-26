@@ -28,9 +28,10 @@ public:
 
         controller::EnteringController enteringController(shoppingCartFactory);
 
-        model::ShoppingCartSummary summary;
         for (int i = 0; i < sizeof(itemsToBeEntered) / sizeof(itemsToBeEntered[0]); ++i) {
-            summary = enteringController.enterItem(itemsToBeEntered[i], quantitiesToBeEntered[i]);
+            model::ShoppingCartSummary summary = enteringController.enterItem(
+                    itemsToBeEntered[i],
+                    quantitiesToBeEntered[i]);
             std::cout << "Summary: " << summary << std::endl;
         }
 

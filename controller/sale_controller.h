@@ -18,12 +18,12 @@ class SaleController {
 
 public:
     SaleController(
-            std::vector<model::ItemRecord> items,
+            const model::ShoppingCart& shoppingCart,
             model::DiscountRules& discountRules,
             model::SaleLog& saleLog)
         : discountRules(discountRules)
         , saleLog(saleLog)
-        , sale(items)
+        , sale(shoppingCart)
     {}
 
     util::Amount requestDiscount(integration::CustomerId customerId)

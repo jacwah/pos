@@ -17,14 +17,9 @@ public:
         , saleLog(saleLog)
     {}
 
-    SaleController create(model::ShoppingCart& shoppingCart)
+    SaleController create(const model::ShoppingCart& shoppingCart)
     {
-        std::vector<model::ItemRecord> items;
-
-        for (auto& id_item : shoppingCart)
-            items.push_back(id_item.second);
-
-        return {items, discountRules, saleLog};
+        return {shoppingCart, discountRules, saleLog};
     }
 };
 

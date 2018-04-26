@@ -63,7 +63,6 @@ public:
         return items.cend();
     }
 
-private:
     util::Amount calculateGrossPrice() const
     {
         util::Amount sum = 0;

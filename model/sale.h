@@ -10,11 +10,11 @@ namespace model {
 const util::Percentage SALES_TAX(0.25);
 
 class Sale {
-    std::vector<model::ItemRecord> items;
+    const model::ShoppingCart& shoppingCart;
 
 public:
-    Sale(std::vector<model::ItemRecord> items)
-        : items(items)
+    Sale(const model::ShoppingCart& shoppingCart)
+        : shoppingCart(shoppingCart)
     {}
 
     util::optional<util::Amount> complete(util::Amount, SaleLog& saleLog)
@@ -24,10 +24,8 @@ public:
 
     util::Amount calculateNetPrice() const
     {
-        util::Amount netPrice;
-
-        for (auto& record : items)
-            netPrice += SALES_TAX.addTo(record.item.getPrice() * record.quantity);
+        util::Amount grossPrice = shoppingCart.calculateGrossPrice();
+        util::Amount netPrice = SALES_TAX.addTo(grossPrice);
 
         return netPrice;
     }
