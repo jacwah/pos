@@ -17,9 +17,18 @@ public:
         : shoppingCart(shoppingCart)
     {}
 
-    util::optional<util::Amount> complete(util::Amount, SaleLog& saleLog)
+    util::optional<util::Amount> complete(util::Amount payedAmount, SaleLog& saleLog)
     {
-        return {};
+        util::Amount netPrice = calculateNetPrice();
+
+        if (payedAmount < netPrice) {
+            return {};
+        } else {
+            util::Amount change = payedAmount - netPrice;
+            saleLog.append({0});
+
+            return change;
+        }
     }
 
     util::Amount calculateNetPrice() const

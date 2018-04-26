@@ -29,6 +29,7 @@ public:
         controller::EnteringController enteringController(shoppingCartFactory);
 
         for (int i = 0; i < sizeof(itemsToBeEntered) / sizeof(itemsToBeEntered[0]); ++i) {
+            // TODO: "error invalid"
             model::ShoppingCartSummary summary = enteringController.enterItem(
                     itemsToBeEntered[i],
                     quantitiesToBeEntered[i]);
@@ -38,6 +39,12 @@ public:
         controller::SaleController saleController = enteringController.finish(saleControllerFactory);
 
         std::cout << "Net price: " << saleController.getNetPrice() << std::endl;
+
+        util::optional<util::Amount> change = saleController.payAndGetChange(20);
+        if (change)
+            std::cout << "Change: " << *change << std::endl;
+        else
+            std::cout << "Payed amount insufficient!" << std::endl;
     }
 };
 

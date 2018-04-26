@@ -9,9 +9,9 @@ public:
     Amount() : value(0) {}
     Amount(double value) : value(value) {}
 
-    bool operator<=(Amount other) const
+    bool operator<(Amount other) const
     {
-        return value <= other.value;
+        return value < other.value;
     }
 
     Amount operator*(double other) const
@@ -22,6 +22,11 @@ public:
     Amount operator+(Amount other) const
     {
         return value + other.value;
+    }
+
+    Amount operator-(Amount other) const
+    {
+        return value - other.value;
     }
 
     Amount& operator+=(Amount other)
