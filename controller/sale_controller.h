@@ -4,6 +4,7 @@
 #include "model/sale_log.h"
 #include "model/sale.h"
 #include "model/shopping_cart.h"
+#include "model/discount.h"
 #include "model/discount_rules.h"
 #include "integration/dto.h"
 #include "util/amount.h"
@@ -26,9 +27,10 @@ public:
         , sale(shoppingCart)
     {}
 
-    util::Amount requestDiscount(integration::CustomerId customerId)
+    void requestDiscount(integration::CustomerId customerId)
     {
-        return util::Amount(0);
+        model::Discount discount = discountRules.getDiscountFor(customerId);
+        sale.setDiscount(discount);
     }
 
     util::optional<util::Amount> payAndGetChange(util::Amount payedAmount)

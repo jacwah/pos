@@ -24,7 +24,7 @@ public:
     void simulateUser()
     {
         integration::ItemId itemsToBeEntered[] =    { 0, 1, 2, 3, 1 };
-        int quantitiesToBeEntered[] =               { 1, 4, 3, 1, 2 };
+        int quantitiesToBeEntered[] =               { 1, 4, 2, 1, 2 };
 
         controller::EnteringController enteringController(shoppingCartFactory);
 
@@ -45,6 +45,9 @@ public:
         controller::SaleController saleController = enteringController.finish(saleControllerFactory);
 
         std::cout << "Net price: " << saleController.getNetPrice() << std::endl;
+
+        saleController.requestDiscount(integration::CustomerId(1));
+        std::cout << "Net price after discount: " << saleController.getNetPrice() << std::endl;
 
         util::optional<util::Amount> change = saleController.payAndGetChange(20);
         if (change)
