@@ -33,7 +33,7 @@ class Percentage {
 
 }
 
-std::ostream& operator<<(std::ostream& os, const util::Percentage& percentage)
+inline std::ostream& operator<<(std::ostream& os, const util::Percentage& percentage)
 {
     os << static_cast<double>(percentage) << "%";
     return os;

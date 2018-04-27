@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 namespace util {
 
 class Amount {
@@ -43,7 +45,7 @@ public:
 
 }
 
-std::ostream& operator<<(std::ostream& os, const util::Amount& amount)
+inline std::ostream& operator<<(std::ostream& os, const util::Amount& amount)
 {
     os << "$" << static_cast<double>(amount);
     return os;

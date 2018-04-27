@@ -64,13 +64,13 @@ public:
 
 }
 
-std::ostream& operator<<(std::ostream& os, const integration::Item& item)
+inline std::ostream& operator<<(std::ostream& os, const integration::Item& item)
 {
     os << item.getDescription() << " (" << item.getPrice() << ")";
     return os;
 }
 
-std::ostream& operator<<(std::ostream& os, const integration::Customer& customer)
+inline std::ostream& operator<<(std::ostream& os, const integration::Customer& customer)
 {
     os << customer.getName() << " (" << customer.getDiscountPercentage() << " off)";
     return os;

@@ -39,7 +39,7 @@ public:
 
 }
 
-std::ostream& operator<<(std::ostream& os, const model::ShoppingCartSummary& summary)
+inline std::ostream& operator<<(std::ostream& os, const model::ShoppingCartSummary& summary)
 {
     os << "LastAdded=";
 
