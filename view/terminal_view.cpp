@@ -2,9 +2,67 @@
 #include "controller/entering_controller.h"
 #include "controller/sale_controller.h"
 #include "integration/dto.h"
+#include "util/optional.h"
 #include <iostream>
 
 namespace view {
+
+class ItemIdRecord {
+    integration::ItemId itemId;
+    int quantity;
+
+    ItemIdRecord(integration::ItemId itemId, int quantity)
+        : itemId(itemId)
+        , quantity(quantity)
+    {}
+
+public:
+    static util::optional<ItemIdRecord> parse(const std::string& string)
+    {
+        try {
+            size_t len = 0;
+            integration::ItemId itemId = std::stoi(string, &len);
+            int quantity = 1;
+
+            if (len < string.size()) {
+                std::string rest = string.substr(len + 1);
+                quantity = std::stoi(rest);
+            }
+
+            return ItemIdRecord(itemId, quantity);
+        } catch (const std::logic_error& error) {
+            std::cout << "Syntax error! (" << error.what() << ")" << std::endl;
+            return {};
+        }
+    }
+
+    integration::ItemId getItemId() const
+    {
+        return itemId;
+    }
+
+    int getQuatity() const
+    {
+        return quantity;
+    }
+};
+
+util::optional<int> parseInt(const std::string& string)
+{
+    try {
+        return std::stoi(string);
+    } catch (const std::logic_error& error) {
+        std::cout << "Syntax error! (" << error.what() << ")" << std::endl;
+        return {};
+    }
+}
+
+util::optional<int> getAndParseInt()
+{
+    std::string input;
+    std::getline(std::cin, input);
+    return parseInt(input);
+}
 
 void TerminalView::runLoop()
 {
@@ -19,7 +77,7 @@ void TerminalView::runLoop()
 void TerminalView::runSingle()
 {
     std::cout << "Enter item id, optionally followed by a separator and then quantity." << std::endl
-        << "Enter empty line to finialize sale." << std::endl;
+        << "Enter blank line to finialize sale." << std::endl;
 
     controller::EnteringController enteringController(shoppingCartFactory);
 
@@ -27,17 +85,20 @@ void TerminalView::runSingle()
         if (line.empty())
             break;
 
-        util::optional<ItemIdRecord> record = parseItemEnter(line);
+        util::optional<ItemIdRecord> record = ItemIdRecord::parse(line);
 
         if (record) {
-            if (record->quantity < 1) {
+            int quantity = record->getQuatity();
+            integration::ItemId itemId = record->getItemId();
+
+            if (quantity < 1) {
                 std::cout << "Error: quantity must be positive" << std::endl;
             } else {
-                model::ShoppingCartSummary summary = enteringController.enterItem(record->itemId, record->quantity);
+                model::ShoppingCartSummary summary = enteringController.enterItem(itemId, quantity);
                 util::optional<integration::Item> item = summary.getLastAddedItem();
 
                 if (item)
-                    std::cout << "Added " << record->quantity << " " << *item << std::endl;
+                    std::cout << "Added " << quantity << " " << *item << std::endl;
                 else
                     std::cout << "Error: item not found" << std::endl;
             }
@@ -77,42 +138,6 @@ void TerminalView::runSingle()
         } else {
             std::cout << "Error: insufficient amount!" << std::endl;
         }
-    }
-}
-
-util::optional<int> TerminalView::getAndParseInt() const
-{
-    std::string input;
-    std::getline(std::cin, input);
-    return parseInt(input);
-}
-
-util::optional<int> TerminalView::parseInt(const std::string& string) const
-{
-    try {
-        return std::stoi(string);
-    } catch (const std::logic_error& error) {
-        std::cout << "Syntax error! (" << error.what() << ")" << std::endl;
-        return {};
-    }
-}
-
-util::optional<ItemIdRecord> TerminalView::parseItemEnter(const std::string& line) const
-{
-    try {
-        size_t len = 0;
-        integration::ItemId itemId = std::stoi(line, &len);
-        int quantity = 1;
-
-        if (len < line.size()) {
-            std::string rest = line.substr(len + 1);
-            quantity = std::stoi(rest);
-        }
-
-        return ItemIdRecord(itemId, quantity);
-    } catch (const std::logic_error& error) {
-        std::cout << "Syntax error! (" << error.what() << ")" << std::endl;
-        return {};
     }
 }
 
