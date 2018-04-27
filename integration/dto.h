@@ -84,13 +84,18 @@ public:
     {
         return totalPrice;
     }
+
+    bool operator<(const SoldItemRecord& other) const
+    {
+        return itemId < other.itemId;
+    }
 };
 
 }
 
 inline std::ostream& operator<<(std::ostream& os, const integration::Item& item)
 {
-    os << item.getDescription() << " (" << item.getPrice() << ")";
+    os << item.getDescription();
     return os;
 }
 

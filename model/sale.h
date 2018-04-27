@@ -61,6 +61,16 @@ private:
             util::Amount changeAmount)
     {
         std::vector<integration::SoldItemRecord> soldItems;
+        for (auto& id_item : shoppingCart) {
+            integration::SoldItemRecord soldItem(
+                    id_item.first,
+                    id_item.second.item,
+                    id_item.second.quantity,
+                    id_item.second.item.getPrice() * id_item.second.quantity);
+            soldItems.push_back(soldItem);
+        }
+
+        std::sort(soldItems.begin(), soldItems.end());
 
         integration::SaleEvent saleEvent(
                 soldItems,

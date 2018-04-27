@@ -7,6 +7,7 @@ namespace integration {
 void RecieptPrinter::handleSaleEvent(const SaleEvent& event)
 {
         std::cout
+            << std::endl
             << "=== Receipt ===" << std::endl
             << "Time: " << event.getTimestamp() << std::endl
             << std::endl
@@ -15,11 +16,16 @@ void RecieptPrinter::handleSaleEvent(const SaleEvent& event)
 
         for (auto& record : event.getItems()) {
             std::cout
-                << std::setw(2) << std::setfill('0') << record.getItemId() << " ";
+                << std::setw(2) << std::setfill('0') << std::right << record.getItemId() << " ";
             std::cout
-                << std::setw(20) << std::left << record.getItem().getDescription();
+                << std::setw(20) << std::setfill(' ') << std::left << record.getItem().getDescription();
             std::cout
                 << record.getTotalPrice() << std::endl;
+
+            int quantity = record.getQuantity();
+            if (quantity > 1)
+                std::cout
+                    << "    " << quantity << " x " << record.getItem().getPrice() << std::endl;
         }
 
         std::cout << std::endl;
