@@ -50,6 +50,42 @@ public:
     }
 };
 
+
+class SoldItemRecord {
+    ItemId itemId;
+    Item item;
+    int quantity;
+    util::Amount totalPrice;
+
+public:
+    SoldItemRecord(ItemId itemId, Item item, int quantity, util::Amount totalPrice)
+        : itemId(itemId)
+        , item(item)
+        , quantity(quantity)
+        , totalPrice(totalPrice)
+    {}
+
+    ItemId getItemId() const
+    {
+        return itemId;
+    }
+
+    const Item& getItem() const
+    {
+        return item;
+    }
+
+    int getQuantity() const
+    {
+        return quantity;
+    }
+
+    util::Amount getTotalPrice() const
+    {
+        return totalPrice;
+    }
+};
+
 }
 
 inline std::ostream& operator<<(std::ostream& os, const integration::Item& item)

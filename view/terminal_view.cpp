@@ -71,7 +71,8 @@ void TerminalView::runSingle()
 
         util::optional<util::Amount> change = saleController.payAndGetChange(*payedAmount);
         if (change) {
-            std::cout << "Change: " << *change << std::endl;
+            // printed on reciept already
+            //std::cout << "Change: " << *change << std::endl;
             finished = true;
         } else {
             std::cout << "Error: insufficient amount!" << std::endl;

@@ -17,6 +17,11 @@ class Discount {
     {
         return percentage.deductFrom(amount);
     }
+
+    util::Amount getAmount(util::Amount amount) const
+    {
+        return percentage.applyTo(amount);
+    }
 };
 
 }

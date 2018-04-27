@@ -13,6 +13,9 @@ const util::Percentage SALES_TAX(0.25);
 class Sale {
     const ShoppingCart& shoppingCart;
     Discount discount;
+    util::Amount discountAmount;
+    util::Amount grossPrice;
+    util::Amount totalTax;
 
 public:
     Sale(const ShoppingCart& shoppingCart)
@@ -28,17 +31,19 @@ public:
             return {};
         } else {
             util::Amount change = payedAmount - netPrice;
-            saleLog.append({});
+            logSale(saleLog, payedAmount, netPrice, change);
 
             return change;
         }
     }
 
-    util::Amount calculateNetPrice() const
+    util::Amount calculateNetPrice()
     {
-        util::Amount grossPrice = shoppingCart.calculateGrossPrice();
-        util::Amount taxedPrice = SALES_TAX.addTo(grossPrice);
-        util::Amount netPrice = discount.applyTo(taxedPrice);
+        grossPrice = shoppingCart.calculateGrossPrice();
+        discountAmount = discount.getAmount(grossPrice);
+        util::Amount discountedPrice = grossPrice - discountAmount;
+        totalTax = SALES_TAX.applyTo(discountedPrice);
+        util::Amount netPrice = discountedPrice + totalTax;
 
         return netPrice;
     }
@@ -46,6 +51,27 @@ public:
     void setDiscount(Discount discount)
     {
         this->discount = discount;
+    }
+
+private:
+    void logSale(
+            SaleLog& saleLog,
+            util::Amount payedAmount,
+            util::Amount netPrice,
+            util::Amount changeAmount)
+    {
+        std::vector<integration::SoldItemRecord> soldItems;
+
+        integration::SaleEvent saleEvent(
+                soldItems,
+                discountAmount,
+                grossPrice,
+                totalTax,
+                netPrice,
+                payedAmount,
+                changeAmount);
+
+        saleLog.append(saleEvent);
     }
 };
 
