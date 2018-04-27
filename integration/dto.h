@@ -50,18 +50,6 @@ public:
     }
 };
 
-class SaleEvent {
-    int time;
-
-public:
-    SaleEvent(int time) : time(time) {}
-
-    int getTime() const
-    {
-        return time;
-    }
-};
-
 }
 
 inline std::ostream& operator<<(std::ostream& os, const integration::Item& item)

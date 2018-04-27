@@ -28,7 +28,7 @@ public:
             return {};
         } else {
             util::Amount change = payedAmount - netPrice;
-            saleLog.append({0});
+            saleLog.append({});
 
             return change;
         }

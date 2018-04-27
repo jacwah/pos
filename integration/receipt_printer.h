@@ -8,7 +8,7 @@ namespace integration {
 class RecieptPrinter : public SaleLogObserver {
     public:
     virtual void handleSaleEvent(const SaleEvent& event) {
-        std::cout << "Receipt: time=" << event.getTime() << std::endl;
+        std::cout << "Receipt: time=" << event.getTimestamp() << std::endl;
     }
 };
 

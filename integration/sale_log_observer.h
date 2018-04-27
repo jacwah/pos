@@ -1,6 +1,6 @@
 #pragma once
 
-#include "integration/dto.h"
+#include "integration/sale_event.h"
 
 namespace integration {
 

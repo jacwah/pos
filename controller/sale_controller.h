@@ -7,6 +7,7 @@
 #include "model/discount.h"
 #include "model/discount_rules.h"
 #include "integration/dto.h"
+#include "integration/sale_event.h"
 #include "util/amount.h"
 #include "util/optional.h"
 
