@@ -1,5 +1,9 @@
 #pragma once
 
+/* Apple has not yet moved optional from std::experimental. Wrap it in a type
+ * here to work around the issue.
+ */
+
 #ifdef __APPLE__
 #include <experimental/optional>
 #else

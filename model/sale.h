@@ -8,8 +8,12 @@
 
 namespace model {
 
+// TODO: Create cpp file to hide SALES_TAX etc.
 const util::Percentage SALES_TAX(0.25);
 
+/**
+ * Represents a sale in progress.
+ */
 class Sale {
     const ShoppingCart& shoppingCart;
     Discount discount;
@@ -18,11 +22,24 @@ class Sale {
     util::Amount totalTax;
 
 public:
+    /**
+     * Creates a new instance.
+     *
+     * @param shoppingCart Contains the items to be sold.
+     */
     Sale(const ShoppingCart& shoppingCart)
         : shoppingCart(shoppingCart)
         , discount()
     {}
 
+    /**
+     * Completes the sale, sending information to <code>saleLog</code>.
+     *
+     * @param payedAmount The amount the customer payed.
+     * @param saleLog Where sale information is sent.
+     * @return The amount of change to give the customer, or nothing if
+     *         <code>payedAmount</code> is insufficient.
+     */
     util::optional<util::Amount> complete(util::Amount payedAmount, SaleLog& saleLog)
     {
         util::Amount netPrice = calculateNetPrice();
@@ -37,6 +54,11 @@ public:
         }
     }
 
+    /**
+     * Calculates the net price.
+     *
+     * @return The net price.
+     */
     util::Amount calculateNetPrice()
     {
         grossPrice = shoppingCart.calculateGrossPrice();
@@ -48,6 +70,11 @@ public:
         return netPrice;
     }
 
+    /**
+     * Sets the discount.
+     *
+     * @param discount The discount to apply.
+     */
     void setDiscount(Discount discount)
     {
         this->discount = discount;

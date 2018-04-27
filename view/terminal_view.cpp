@@ -47,7 +47,7 @@ public:
     }
 };
 
-util::optional<int> parseInt(const std::string& string)
+static util::optional<int> parseInt(const std::string& string)
 {
     try {
         return std::stoi(string);
@@ -57,7 +57,7 @@ util::optional<int> parseInt(const std::string& string)
     }
 }
 
-util::optional<int> getAndParseInt()
+static util::optional<int> getAndParseInt()
 {
     std::string input;
     std::getline(std::cin, input);
@@ -77,7 +77,7 @@ void TerminalView::runLoop()
 void TerminalView::runSingle()
 {
     std::cout << "Enter item id, optionally followed by a separator and then quantity." << std::endl
-        << "Enter blank line to finialize sale." << std::endl;
+        << "Enter blank line to finalize sale." << std::endl;
 
     controller::EnteringController enteringController(shoppingCartFactory);
 
@@ -98,7 +98,7 @@ void TerminalView::runSingle()
                 util::optional<integration::Item> item = summary.getLastAddedItem();
 
                 if (item)
-                    std::cout << "Added " << quantity << " " << *item << std::endl;
+                    std::cout << "Added " << quantity << " " << item->getDescription() << std::endl;
                 else
                     std::cout << "Error: item not found" << std::endl;
             }

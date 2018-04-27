@@ -9,7 +9,7 @@
 
 namespace startup {
 
-model::SaleLog setupSaleLogging()
+static model::SaleLog setupSaleLogging()
 {
     auto observers = integration::createSaleObservers();
     model::SaleLog log;
@@ -20,7 +20,7 @@ model::SaleLog setupSaleLogging()
     return log;
 }
 
-void main()
+static void main()
 {
     integration::CatalogCreator catalogCreator;
     integration::ItemCatalog itemCatalog = catalogCreator.getItemCatalog();

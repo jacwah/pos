@@ -9,11 +9,24 @@
 
 namespace view {
 
+/**
+ * A mock view.
+ */
 class View {
     controller::SaleControllerFactory saleControllerFactory;
     model::ShoppingCartFactory shoppingCartFactory;
 
 public:
+    /**
+     * Creates a new instance.
+     *
+     * @param saleControllerFactory A factory from which any
+     *                              {@link controller::SaleController}
+     *                              instances will be created.
+     * @param shoppingCartFactory A factory from which any
+     *                            {@link model::ShoppingCart} instances
+     *                            will be created.
+     */
     View(
             controller::SaleControllerFactory saleControllerFactory,
             model::ShoppingCartFactory shoppingCartFactory)
@@ -21,6 +34,9 @@ public:
         , shoppingCartFactory(shoppingCartFactory)
     {}
 
+    /**
+     * Simulates a user interacting with the system.
+     */
     void simulateUser()
     {
         integration::ItemId itemsToBeEntered[] =    { 0, 1, 2, 3, 1 };

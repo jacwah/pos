@@ -4,9 +4,17 @@
 
 namespace integration {
 
+/**
+ * Interface for classes that observe completed sales.
+ */
 class SaleLogObserver {
-    public:
-    virtual void handleSaleEvent(const SaleEvent&) = 0;
+public:
+    /**
+     * Handles the completed sale in an implementation specific way.
+     *
+     * @param saleEvent Information about a completed sale.
+     */
+    virtual void handleSaleEvent(const SaleEvent& saleEvent) = 0;
 };
 
 }

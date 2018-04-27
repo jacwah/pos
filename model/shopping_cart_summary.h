@@ -6,50 +6,45 @@
 
 namespace model {
 
+/**
+ * Represents a summary of state of a {@link model::ShoppingCart}.
+ */
 class ShoppingCartSummary {
     util::optional<integration::Item> lastAddedItem;
     util::Amount grossPrice;
 
 public:
-    ShoppingCartSummary()
-        : lastAddedItem()
-        , grossPrice(0)
-    {}
-
+    /**
+     * Creates a new instance.
+     *
+     * @param item The item last added to the shopping cart. If no item was
+     *             was added, this is nothing.
+     * @param grossPrice The gross price of all items in the shopping cart.
+     */
     ShoppingCartSummary(util::optional<integration::Item> item, util::Amount grossPrice)
         : lastAddedItem(item)
         , grossPrice(grossPrice)
     {}
 
-    ShoppingCartSummary(const ShoppingCartSummary& other)
-        : grossPrice(other.grossPrice)
-        , lastAddedItem(other.lastAddedItem)
-    {}
-
+    /**
+     * Gets the last added item.
+     *
+     * @return The last added item, or nothing if no item was added.
+     */
     const util::optional<integration::Item> getLastAddedItem() const
     {
         return lastAddedItem;
     }
 
+    /**
+     * Gets the gross price.
+     *
+     * @return The gross price of all items in the shopping cart.
+     */
     const util::Amount getGrossPrice() const
     {
         return grossPrice;
     }
 };
 
-}
-
-inline std::ostream& operator<<(std::ostream& os, const model::ShoppingCartSummary& summary)
-{
-    os << "LastAdded=";
-
-    auto item = summary.getLastAddedItem();
-    if (item)
-        os << *item;
-    else
-        os << "(None)";
-
-    os << " GrossPrice=" << summary.getGrossPrice();
-
-    return os;
 }
