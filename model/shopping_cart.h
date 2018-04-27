@@ -7,14 +7,30 @@
 
 namespace model {
 
-struct ItemRecord {
+class ItemRecord {
     integration::Item item;
     int quantity;
 
+public:
     ItemRecord(integration::Item item, int quantity)
         : item(item)
         , quantity(quantity)
     {}
+
+    const integration::Item& getItem() const
+    {
+        return item;
+    }
+
+    int getQuantity() const
+    {
+        return quantity;
+    }
+
+    void incrementQuantity()
+    {
+        ++quantity;
+    }
 };
 
 typedef std::unordered_map<integration::ItemId, ItemRecord> ItemMap;
@@ -46,7 +62,7 @@ public:
                 ItemRecord record(*item, quantity);
                 items.emplace(std::make_pair(id, record));
             } else {
-                iterator->second.quantity += 1;
+                iterator->second.incrementQuantity();
             }
         }
 
@@ -70,7 +86,7 @@ public:
         for (auto id_item : items) {
             auto record = id_item.second;
 
-            sum += record.item.getPrice() * record.quantity;
+            sum += record.getItem().getPrice() * record.getQuantity();
         }
 
         return sum;

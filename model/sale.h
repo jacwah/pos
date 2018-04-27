@@ -62,11 +62,13 @@ private:
     {
         std::vector<integration::SoldItemRecord> soldItems;
         for (auto& id_item : shoppingCart) {
+            const integration::Item& item = id_item.second.getItem();
+            int quantity = id_item.second.getQuantity();
             integration::SoldItemRecord soldItem(
                     id_item.first,
-                    id_item.second.item,
-                    id_item.second.quantity,
-                    id_item.second.item.getPrice() * id_item.second.quantity);
+                    item,
+                    quantity,
+                    item.getPrice() * quantity);
             soldItems.push_back(soldItem);
         }
 
