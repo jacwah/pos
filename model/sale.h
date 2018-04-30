@@ -8,9 +8,6 @@
 
 namespace model {
 
-// TODO: Create cpp file to hide SALES_TAX etc.
-const util::Percentage SALES_TAX(0.25);
-
 /**
  * Represents a sale in progress.
  */
@@ -40,35 +37,14 @@ public:
      * @return The amount of change to give the customer, or nothing if
      *         <code>payedAmount</code> is insufficient.
      */
-    util::optional<util::Amount> complete(util::Amount payedAmount, SaleLog& saleLog)
-    {
-        util::Amount netPrice = calculateNetPrice();
-
-        if (payedAmount < netPrice) {
-            return {};
-        } else {
-            util::Amount change = payedAmount - netPrice;
-            logSale(saleLog, payedAmount, netPrice, change);
-
-            return change;
-        }
-    }
+    util::optional<util::Amount> complete(util::Amount payedAmount, SaleLog& saleLog);
 
     /**
      * Calculates the net price.
      *
      * @return The net price.
      */
-    util::Amount calculateNetPrice()
-    {
-        grossPrice = shoppingCart.calculateGrossPrice();
-        discountAmount = discount.getAmount(grossPrice);
-        util::Amount discountedPrice = grossPrice - discountAmount;
-        totalTax = SALES_TAX.applyTo(discountedPrice);
-        util::Amount netPrice = discountedPrice + totalTax;
-
-        return netPrice;
-    }
+    util::Amount calculateNetPrice();
 
     /**
      * Sets the discount.
@@ -85,33 +61,7 @@ private:
             SaleLog& saleLog,
             util::Amount payedAmount,
             util::Amount netPrice,
-            util::Amount changeAmount)
-    {
-        std::vector<integration::SoldItemRecord> soldItems;
-        for (auto& id_item : shoppingCart) {
-            const integration::Item& item = id_item.second.getItem();
-            int quantity = id_item.second.getQuantity();
-            integration::SoldItemRecord soldItem(
-                    id_item.first,
-                    item,
-                    quantity,
-                    item.getPrice() * quantity);
-            soldItems.push_back(soldItem);
-        }
-
-        std::sort(soldItems.begin(), soldItems.end());
-
-        integration::SaleEvent saleEvent(
-                soldItems,
-                discountAmount,
-                grossPrice,
-                totalTax,
-                netPrice,
-                payedAmount,
-                changeAmount);
-
-        saleLog.append(saleEvent);
-    }
+            util::Amount changeAmount);
 };
 
 }

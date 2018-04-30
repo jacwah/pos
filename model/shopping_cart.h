@@ -70,7 +70,7 @@ public:
      *
      * @param itemCatalog A catalog of items that can be added to the cart.
      */
-    ShoppingCart(integration::ItemCatalog& itemCatalog) 
+    ShoppingCart(integration::ItemCatalog& itemCatalog)
         : itemCatalog(itemCatalog)
     {}
 
