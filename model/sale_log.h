@@ -18,7 +18,7 @@ public:
     /**
      * Create a new instance with no observers.
      */
-    SaleLog() 
+    SaleLog()
         : observers()
     {}
 
@@ -32,11 +32,6 @@ public:
     {
         std::swap(observers, other.observers);
     }
-
-    // TODO: Keep?
-    // This is a non-copy type because of std::unique_ptr!
-    SaleLog(const SaleLog&) = delete;
-    SaleLog& operator=(const SaleLog&) = delete;
 
     /**
      * Add an observer to be notified of new sales.
