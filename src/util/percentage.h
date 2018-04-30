@@ -5,7 +5,7 @@
 namespace util {
 
 /**
- * Represents a percentage.
+ * Represents a percentage from 0% to 100%.
  */
 class Percentage {
     double value;
@@ -16,7 +16,7 @@ public:
      *
      * @param The ratio.
      */
-    Percentage(double value) 
+    Percentage(double value)
         : value(value)
     {}
 
@@ -65,10 +65,3 @@ public:
 };
 
 }
-
-inline std::ostream& operator<<(std::ostream& os, const util::Percentage& percentage)
-{
-    os << static_cast<double>(percentage) << "%";
-    return os;
-}
-

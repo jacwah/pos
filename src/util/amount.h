@@ -5,7 +5,7 @@
 namespace util {
 
 /**
- * Represents a monetary amount.
+ * Represents a monetary amount. Is non-negative.
  */
 class Amount {
     double value;
@@ -15,7 +15,7 @@ public:
      * Creates a new instance representing no money.
      */
     Amount()
-        : value(0) 
+        : value(0)
     {}
 
     /**
@@ -23,7 +23,7 @@ public:
      *
      * @param value The monetary amount.
      */
-    Amount(double value) 
+    Amount(double value)
         : value(value)
     {}
 

@@ -16,8 +16,8 @@ public:
     /**
      * Creates a new instance representing the present time.
      */
-    Time() 
-        : timePoint(std::chrono::system_clock::now()) 
+    Time()
+        : timePoint(std::chrono::system_clock::now())
     {}
 
     /**
