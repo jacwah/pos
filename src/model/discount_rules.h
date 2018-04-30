@@ -10,7 +10,7 @@ namespace model {
  * Represents the rules governing sale discounts.
  */
 class DiscountRules {
-    const integration::CustomerCatalog customerCatalog;
+    integration::CustomerCatalog customerCatalog;
 
 public:
     /**
@@ -18,8 +18,8 @@ public:
      *
      * @param catalogCreator An object containing required catalogs.
      */
-    DiscountRules(const integration::CatalogCreator catalogCreator)
-        : customerCatalog(catalogCreator.getCustomerCatalog()) 
+    DiscountRules(const integration::CatalogCreator& catalogCreator)
+        : customerCatalog(catalogCreator.getCustomerCatalog())
     {}
 
     /**
