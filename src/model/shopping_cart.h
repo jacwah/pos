@@ -47,11 +47,13 @@ public:
     }
 
     /**
-     * Increments the quantity by one.
+     * Increments the quantity.
+     *
+     * @param increment The amount to increment by.
      */
-    void incrementQuantity()
+    void incrementQuantity(int increment)
     {
-        ++quantity;
+        quantity += increment;
     }
 };
 
@@ -106,8 +108,7 @@ public:
                 ItemRecord record(*item, quantity);
                 items.emplace(std::make_pair(id, record));
             } else {
-                // TODO: Add quantity!! Not one...
-                iterator->second.incrementQuantity();
+                iterator->second.incrementQuantity(quantity);
             }
         }
 
