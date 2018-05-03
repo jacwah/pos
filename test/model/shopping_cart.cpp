@@ -5,7 +5,9 @@ TEST_CASE("Shopping cart works with items")
 {
     integration::ItemCatalog itemCatalog;
     integration::ItemId itemId(1);
+    integration::ItemId itemId2(2);
     integration::Item item = *itemCatalog.find(itemId);
+    integration::Item item2 = *itemCatalog.find(itemId2);
     model::ShoppingCart cart(itemCatalog);
 
     SECTION("ItemRecords can increment quantity")
@@ -18,7 +20,7 @@ TEST_CASE("Shopping cart works with items")
 
     SECTION("Cart is empty by default")
     {
-        FAIL("Not tested");
+        REQUIRE(cart.begin() == cart.end());
     }
 
     SECTION("Can add multiple items after inital addition")
@@ -33,5 +35,13 @@ TEST_CASE("Shopping cart works with items")
         REQUIRE(iter->first == itemId);
         REQUIRE(iter->second.getQuantity() == 4);
         REQUIRE(++iter == cart.end());
+    }
+
+    SECTION("Gross price is correct")
+    {
+        util::Amount correctPrice = item.getPrice() * 3 + item2.getPrice() * 4;
+        cart.addIfValid(itemId, 3);
+        cart.addIfValid(itemId2, 4);
+        REQUIRE(cart.calculateGrossPrice() == Approx(correctPrice));
     }
 }
