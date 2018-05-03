@@ -55,15 +55,15 @@ public:
     }
 
     /**
-     * Signals that the sale is payed for and should be considered completed.
+     * Signals that the sale is paid for and should be considered completed.
      *
-     * @param payedAmount The amount the customer has payed.
+     * @param paidAmount The amount the customer has paid.
      * @return The amount of change the customer should recieve, or nothing if
-     *         the <code>payedAmoount</code> is insufficient.
+     *         the <code>paidAmoount</code> is insufficient.
      */
-    util::optional<util::Amount> payAndGetChange(util::Amount payedAmount)
+    util::optional<util::Amount> payAndGetChange(util::Amount paidAmount)
     {
-        return sale.complete(payedAmount, saleLog);
+        return sale.complete(paidAmount, saleLog);
     }
 
     /**

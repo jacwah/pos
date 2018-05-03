@@ -124,13 +124,13 @@ void TerminalView::runSingle()
 
     bool finished = false;
     while (!finished) {
-        util::optional<int> payedAmount;
-        while (!payedAmount) {
-            std::cout << "Enter payed amount> ";
-            payedAmount = getAndParseInt();
+        util::optional<int> paidAmount;
+        while (!paidAmount) {
+            std::cout << "Enter paid amount> ";
+            paidAmount = getAndParseInt();
         }
 
-        util::optional<util::Amount> change = saleController.payAndGetChange(*payedAmount);
+        util::optional<util::Amount> change = saleController.payAndGetChange(*paidAmount);
         if (change) {
             std::cout << "Change: " << *change << std::endl;
             finished = true;

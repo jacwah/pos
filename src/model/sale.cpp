@@ -4,15 +4,15 @@ namespace model {
 
 const util::Percentage SALES_TAX(0.25);
 
-util::optional<util::Amount> Sale::complete(util::Amount payedAmount, SaleLog& saleLog)
+util::optional<util::Amount> Sale::complete(util::Amount paidAmount, SaleLog& saleLog)
 {
     util::Amount netPrice = calculateNetPrice();
 
-    if (payedAmount < netPrice) {
+    if (paidAmount < netPrice) {
         return {};
     } else {
-        util::Amount change = payedAmount - netPrice;
-        logSale(saleLog, payedAmount, netPrice, change);
+        util::Amount change = paidAmount - netPrice;
+        logSale(saleLog, paidAmount, netPrice, change);
 
         return change;
     }
@@ -31,7 +31,7 @@ util::Amount Sale::calculateNetPrice()
 
 void Sale::logSale(
         SaleLog& saleLog,
-        util::Amount payedAmount,
+        util::Amount paidAmount,
         util::Amount netPrice,
         util::Amount changeAmount)
 {
@@ -55,7 +55,7 @@ void Sale::logSale(
             grossPrice,
             totalTax,
             netPrice,
-            payedAmount,
+            paidAmount,
             changeAmount);
 
     saleLog.append(saleEvent);

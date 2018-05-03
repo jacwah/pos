@@ -32,12 +32,12 @@ public:
     /**
      * Completes the sale, sending information to <code>saleLog</code>.
      *
-     * @param payedAmount The amount the customer payed.
+     * @param paidAmount The amount the customer paid.
      * @param saleLog Where sale information is sent.
      * @return The amount of change to give the customer, or nothing if
-     *         <code>payedAmount</code> is insufficient.
+     *         <code>paidAmount</code> is insufficient.
      */
-    util::optional<util::Amount> complete(util::Amount payedAmount, SaleLog& saleLog);
+    util::optional<util::Amount> complete(util::Amount paidAmount, SaleLog& saleLog);
 
     /**
      * Calculates the net price.
@@ -59,7 +59,7 @@ public:
 private:
     void logSale(
             SaleLog& saleLog,
-            util::Amount payedAmount,
+            util::Amount paidAmount,
             util::Amount netPrice,
             util::Amount changeAmount);
 };

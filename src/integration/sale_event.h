@@ -16,7 +16,7 @@ class SaleEvent {
     util::Amount grossPrice;
     util::Amount totalTax;
     util::Amount netPrice;
-    util::Amount payedAmount;
+    util::Amount paidAmount;
     util::Amount changeAmount;
 
 public:
@@ -26,9 +26,9 @@ public:
      * @param soldItems The items and quantities sold in the sale.
      * @param discountAmount The discount given to the customer.
      * @param grossPrice The gross price of the <code>soldItems</code>.
-     * @param totalTax The total sales tax payed.
+     * @param totalTax The total sales tax paid.
      * @param netPrice The net price of the sale.
-     * @param payedAmount The amount the customer payed.
+     * @param paidAmount The amount the customer paid.
      * @param changeAmount The amount of change given back to the customer.
      */
     SaleEvent(
@@ -37,7 +37,7 @@ public:
             util::Amount grossPrice,
             util::Amount totalTax,
             util::Amount netPrice,
-            util::Amount payedAmount,
+            util::Amount paidAmount,
             util::Amount changeAmount)
         : timestamp()
         , soldItems(soldItems)
@@ -45,7 +45,7 @@ public:
         , grossPrice(grossPrice)
         , totalTax(totalTax)
         , netPrice(netPrice)
-        , payedAmount(payedAmount)
+        , paidAmount(paidAmount)
         , changeAmount(changeAmount)
     {}
 
@@ -90,9 +90,9 @@ public:
     }
 
     /**
-     * Gets the total sales tax payed.
+     * Gets the total sales tax paid.
      *
-     * @return The total sales tax payed.
+     * @return The total sales tax paid.
      */
     util::Amount getTotalTax() const
     {
@@ -110,13 +110,13 @@ public:
     }
 
     /**
-     * Gets the amount payed by the customer.
+     * Gets the amount paid by the customer.
      *
-     * @return The amount payed by the customer.
+     * @return The amount paid by the customer.
      */
-    util::Amount getPayedAmount() const
+    util::Amount getpaidAmount() const
     {
-        return payedAmount;
+        return paidAmount;
     }
 
     /**

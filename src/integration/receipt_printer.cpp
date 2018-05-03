@@ -41,7 +41,7 @@ void RecieptPrinter::handleSaleEvent(const SaleEvent& event)
             << "Sales tax:    " << event.getTotalTax() << std::endl
             << "---" << std::endl
             << "Net price:    " << event.getNetPrice() << std::endl
-            << "Cash payment: " << event.getPayedAmount() << std::endl
+            << "Cash payment: " << event.getpaidAmount() << std::endl
             << "Change:       " << event.getChangeAmount() << std::endl
             << std::endl;
     }
