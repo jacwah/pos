@@ -7,9 +7,9 @@ namespace integration {
 /**
  * Represents a connected receipt printer.
  */
-class RecieptPrinter : public SaleLogObserver {
+class ReceiptPrinter : public SaleLogObserver {
     /**
-     * Print a reciept.
+     * Print a receipt.
      *
      * @param event Contains information about a completed sale.
      */

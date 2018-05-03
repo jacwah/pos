@@ -69,7 +69,7 @@ public:
         if (change)
             std::cout << "Change: " << *change << std::endl;
         else
-            std::cout << "Paid amount insufficient!" << std::endl; receipt, paid
+            std::cout << "Paid amount insufficient!" << std::endl;
     }
 };
 
