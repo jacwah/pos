@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sale_log_observer.h"
+#include <iostream>
 
 namespace integration {
 
@@ -9,7 +10,18 @@ namespace integration {
  * completed sales.
  */
 class AccountingSystem : public SaleLogObserver {
+    std::ostream& stream;
+
 public:
+    /**
+     * Creates a new instance.
+     *
+     * @param stream The stream to write output to.
+     */
+    AccountingSystem(std::ostream& stream)
+        : stream(stream)
+    {}
+
     /**
      * Sends information about a completed sale to the external accounting
      * system.

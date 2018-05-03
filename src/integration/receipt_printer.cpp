@@ -1,12 +1,11 @@
 #include "integration/receipt_printer.h"
-#include <iostream>
 #include <iomanip>
 
 namespace integration {
 
 void ReceiptPrinter::handleSaleEvent(const SaleEvent& event)
 {
-        std::cout
+        stream
             << std::endl
             << "=== Receipt ===" << std::endl
             << "Time: " << event.getTimestamp() << std::endl
@@ -15,27 +14,27 @@ void ReceiptPrinter::handleSaleEvent(const SaleEvent& event)
             << "----------------------------" << std::endl;
 
         for (auto& record : event.getItems()) {
-            std::cout
+            stream
                 << std::setw(2) << std::setfill('0') << std::right << record.getItemId() << " ";
-            std::cout
+            stream
                 << std::setw(20) << std::setfill(' ') << std::left << record.getItem().getDescription();
-            std::cout
+            stream
                 << record.getTotalPrice() << std::endl;
 
             int quantity = record.getQuantity();
             if (quantity > 1)
-                std::cout
+                stream
                     << "    " << quantity << " x " << record.getItem().getPrice() << std::endl;
         }
 
-        std::cout << std::endl;
+        stream << std::endl;
 
         util::Amount discountAmount = event.getDiscountAmount();
         if (util::Amount(0) < discountAmount)
-            std::cout
+            stream
                 << "Discount: " << discountAmount << std::endl;
 
-        std::cout
+        stream
             << "Gross price:  " << event.getGrossPrice() << std::endl
             << "Sales tax:    " << event.getTotalTax() << std::endl
             << "---" << std::endl

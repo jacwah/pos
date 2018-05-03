@@ -17,9 +17,9 @@ std::vector<std::unique_ptr<SaleLogObserver>> createSaleObservers()
 {
     std::vector<std::unique_ptr<SaleLogObserver>> observers;
 
-    observers.emplace_back(std::make_unique<ReceiptPrinter>());
-    observers.emplace_back(std::make_unique<InventorySystem>());
-    observers.emplace_back(std::make_unique<AccountingSystem>());
+    observers.emplace_back(std::make_unique<ReceiptPrinter>(std::cout));
+    observers.emplace_back(std::make_unique<InventorySystem>(std::cout));
+    observers.emplace_back(std::make_unique<AccountingSystem>(std::cout));
 
     return observers;
 }
