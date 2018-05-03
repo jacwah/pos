@@ -13,7 +13,7 @@ namespace integration {
  *
  * @return A list of observers that should be notified.
  */
-std::vector<std::unique_ptr<SaleLogObserver>> createSaleObservers()
+inline std::vector<std::unique_ptr<SaleLogObserver>> createSaleObservers()
 {
     std::vector<std::unique_ptr<SaleLogObserver>> observers;
 
