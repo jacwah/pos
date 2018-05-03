@@ -4,6 +4,7 @@
 
 namespace integration {
 
+//TODO: STAVA receipt, paid
 void RecieptPrinter::handleSaleEvent(const SaleEvent& event)
 {
         std::cout

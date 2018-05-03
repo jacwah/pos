@@ -106,6 +106,7 @@ public:
                 ItemRecord record(*item, quantity);
                 items.emplace(std::make_pair(id, record));
             } else {
+                // TODO: Add quantity!! Not one...
                 iterator->second.incrementQuantity();
             }
         }
