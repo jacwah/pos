@@ -4,6 +4,7 @@
 #include "integration/receipt_printer.h"
 #include "integration/accounting_system.h"
 #include "integration/inventory_system.h"
+#include <vector>
 
 namespace integration {
 
