@@ -1,5 +1,6 @@
 #pragma once
 
+#include "integration/dto.h"
 #include "util/optional.h"
 
 namespace integration {
