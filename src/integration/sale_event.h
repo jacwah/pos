@@ -114,7 +114,7 @@ public:
      *
      * @return The amount paid by the customer.
      */
-    util::Amount getpaidAmount() const
+    util::Amount getPaidAmount() const
     {
         return paidAmount;
     }
