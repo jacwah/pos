@@ -24,8 +24,8 @@ TEST_CASE("Entering controller")
         {
             REQUIRE(summary.getLastAddedItem());
             integration::Item addedItem = *summary.getLastAddedItem();
-            REQUIRE(addedItem.getDescription() == expectedItem.getDescription());
-            REQUIRE(addedItem.getPrice() == expectedItem.getPrice());
+            CHECK(addedItem.getDescription() == expectedItem.getDescription());
+            CHECK(addedItem.getPrice() == expectedItem.getPrice());
         }
 
         SECTION("Correct gross price")
