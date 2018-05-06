@@ -5,13 +5,13 @@
 TEST_CASE("Amount is default initialized to zero")
 {
     util::Amount amount;
-    REQUIRE(static_cast<double>(amount) == 0);
+    REQUIRE(amount == 0);
 }
 
 TEST_CASE("Amount is initialized to given value")
 {
     util::Amount amount(5);
-    REQUIRE(static_cast<double>(amount) == 5);
+    REQUIRE(amount == 5);
 }
 
 TEST_CASE("Amounts can be compared")
@@ -28,7 +28,7 @@ TEST_CASE("Amount can be multiplied by scalar")
     util::Amount five(5);
     util::Amount ten = five * 2;
 
-    REQUIRE(static_cast<double>(ten) == Approx(10));
+    REQUIRE(ten == Approx(10));
 }
 
 TEST_CASE("Amounts implement basic mathematical operators")
@@ -39,20 +39,20 @@ TEST_CASE("Amounts implement basic mathematical operators")
     SECTION("addition")
     {
         util::Amount seven = five + two;
-        REQUIRE(static_cast<double>(seven) == Approx(7));
+        REQUIRE(seven == Approx(7));
     }
 
     SECTION("subtraction")
     {
         util::Amount three = five - two;
-        REQUIRE(static_cast<double>(three) == Approx(3));
+        REQUIRE(three == Approx(3));
     }
 
     SECTION("addition assignment")
     {
         util::Amount amount = five;
         amount += two;
-        REQUIRE(static_cast<double>(amount) == Approx(7));
+        REQUIRE(amount == Approx(7));
     }
 }
 

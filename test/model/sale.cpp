@@ -15,13 +15,13 @@ TEST_CASE("Sale")
 
         SECTION("Net price")
         {
-            REQUIRE(static_cast<double>(sale.calculateNetPrice()) == 0.0);
+            REQUIRE(sale.calculateNetPrice() == 0.0);
         }
 
         SECTION("Net price with discount")
         {
             sale.setDiscount(discount);
-            REQUIRE(static_cast<double>(sale.calculateNetPrice()) == 0.0);
+            REQUIRE(sale.calculateNetPrice() == 0.0);
         }
     }
 
@@ -38,7 +38,6 @@ TEST_CASE("Sale")
         shoppingCart.addIfValid(integration::ItemId(1), 2);
         model::Sale sale(shoppingCart);
 
-        // TODO: remove unnecessary static_casts from other tests
         SECTION("Net price")
         {
             REQUIRE(sale.calculateNetPrice()
