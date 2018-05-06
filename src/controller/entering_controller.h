@@ -1,5 +1,7 @@
 #pragma once
 
+#include "controller/sale_controller.h"
+#include "controller/sale_controller_factory.h"
 #include "model/shopping_cart_factory.h"
 #include "model/shopping_cart.h"
 #include "integration/dto.h"
