@@ -39,6 +39,17 @@ public:
     }
 
     /**
+     * Compares the amount to another amount.
+     *
+     * @param other Amount to compare to.
+     * @return <code>true</code> if this amount is exactly equal to <code>other</code>.
+     */
+    bool operator==(Amount other) const
+    {
+        return value == other.value;
+    }
+
+    /**
      * Multiplies the amount by a scalar.
      *
      * @param scalar The factor.
