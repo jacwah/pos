@@ -18,9 +18,9 @@ TEST_CASE("Amounts can be compared")
 {
     util::Amount small(5);
     util::Amount large(10);
-    REQUIRE(small < large);
-    REQUIRE_FALSE(small < small);
-    REQUIRE_FALSE(large < small);
+    CHECK(small < large);
+    CHECK_FALSE(small < small);
+    CHECK_FALSE(large < small);
 }
 
 TEST_CASE("Amount can be multiplied by scalar")

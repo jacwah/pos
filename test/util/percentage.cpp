@@ -21,26 +21,26 @@ TEST_CASE("Percentage can be used with amount")
     {
         SECTION("0%")
         {
-            REQUIRE(static_cast<double>(none.deductFrom(zero)) == 0.0);
-            REQUIRE(static_cast<double>(none.deductFrom(ten)) == 10.0);
+            CHECK(static_cast<double>(none.deductFrom(zero)) == 0.0);
+            CHECK(static_cast<double>(none.deductFrom(ten)) == 10.0);
         }
 
         SECTION("25%")
         {
-            REQUIRE(static_cast<double>(quater.deductFrom(zero)) == 0.0);
-            REQUIRE(static_cast<double>(quater.deductFrom(ten)) == Approx(7.5));
+            CHECK(static_cast<double>(quater.deductFrom(zero)) == 0.0);
+            CHECK(static_cast<double>(quater.deductFrom(ten)) == Approx(7.5));
         }
 
         SECTION("50%")
         {
-            REQUIRE(static_cast<double>(half.deductFrom(zero)) == 0.0);
-            REQUIRE(static_cast<double>(half.deductFrom(ten)) == Approx(5.0));
+            CHECK(static_cast<double>(half.deductFrom(zero)) == 0.0);
+            CHECK(static_cast<double>(half.deductFrom(ten)) == Approx(5.0));
         }
 
         SECTION("100%")
         {
-            REQUIRE(static_cast<double>(all.deductFrom(zero)) == 0.0);
-            REQUIRE(static_cast<double>(all.deductFrom(ten)) == Approx(0.0));
+            CHECK(static_cast<double>(all.deductFrom(zero)) == 0.0);
+            CHECK(static_cast<double>(all.deductFrom(ten)) == Approx(0.0));
         }
     }
 
@@ -48,26 +48,26 @@ TEST_CASE("Percentage can be used with amount")
     {
         SECTION("0%")
         {
-            REQUIRE(static_cast<double>(none.addTo(zero)) == 0.0);
-            REQUIRE(static_cast<double>(none.addTo(ten)) == 10.0);
+            CHECK(static_cast<double>(none.addTo(zero)) == 0.0);
+            CHECK(static_cast<double>(none.addTo(ten)) == 10.0);
         }
 
         SECTION("25%")
         {
-            REQUIRE(static_cast<double>(quater.addTo(zero)) == 0.0);
-            REQUIRE(static_cast<double>(quater.addTo(ten)) == Approx(12.5));
+            CHECK(static_cast<double>(quater.addTo(zero)) == 0.0);
+            CHECK(static_cast<double>(quater.addTo(ten)) == Approx(12.5));
         }
 
         SECTION("50%")
         {
-            REQUIRE(static_cast<double>(half.addTo(zero)) == 0.0);
-            REQUIRE(static_cast<double>(half.addTo(ten)) == Approx(15.0));
+            CHECK(static_cast<double>(half.addTo(zero)) == 0.0);
+            CHECK(static_cast<double>(half.addTo(ten)) == Approx(15.0));
         }
 
         SECTION("100%")
         {
-            REQUIRE(static_cast<double>(all.addTo(zero)) == 0.0);
-            REQUIRE(static_cast<double>(all.addTo(ten)) == Approx(20.0));
+            CHECK(static_cast<double>(all.addTo(zero)) == 0.0);
+            CHECK(static_cast<double>(all.addTo(ten)) == Approx(20.0));
         }
     }
 
@@ -75,26 +75,26 @@ TEST_CASE("Percentage can be used with amount")
     {
         SECTION("0%")
         {
-            REQUIRE(static_cast<double>(none.applyTo(zero)) == 0.0);
-            REQUIRE(static_cast<double>(none.applyTo(ten)) == 0.0);
+            CHECK(static_cast<double>(none.applyTo(zero)) == 0.0);
+            CHECK(static_cast<double>(none.applyTo(ten)) == 0.0);
         }
 
         SECTION("25%")
         {
-            REQUIRE(static_cast<double>(quater.applyTo(zero)) == 0.0);
-            REQUIRE(static_cast<double>(quater.applyTo(ten)) == Approx(2.5));
+            CHECK(static_cast<double>(quater.applyTo(zero)) == 0.0);
+            CHECK(static_cast<double>(quater.applyTo(ten)) == Approx(2.5));
         }
 
         SECTION("50%")
         {
-            REQUIRE(static_cast<double>(half.applyTo(zero)) == 0.0);
-            REQUIRE(static_cast<double>(half.applyTo(ten)) == Approx(5.0));
+            CHECK(static_cast<double>(half.applyTo(zero)) == 0.0);
+            CHECK(static_cast<double>(half.applyTo(ten)) == Approx(5.0));
         }
 
         SECTION("100%")
         {
-            REQUIRE(static_cast<double>(all.applyTo(zero)) == 0.0);
-            REQUIRE(static_cast<double>(all.applyTo(ten)) == 10.0);
+            CHECK(static_cast<double>(all.applyTo(zero)) == 0.0);
+            CHECK(static_cast<double>(all.applyTo(ten)) == 10.0);
         }
     }
 }

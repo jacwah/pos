@@ -20,12 +20,12 @@ TEST_CASE("Receipt printer gives correct output")
         );
         receiptPrinter.handleSaleEvent(event);
 
-        REQUIRE_THAT(stream.str(), Catch::Contains("Time: "));
-        REQUIRE_THAT(stream.str(), Catch::Contains("Gross price:  $0"));
-        REQUIRE_THAT(stream.str(), Catch::Contains("Sales tax:    $0"));
-        REQUIRE_THAT(stream.str(), Catch::Contains("Net price:    $0"));
-        REQUIRE_THAT(stream.str(), Catch::Contains("Cash payment: $0"));
-        REQUIRE_THAT(stream.str(), Catch::Contains("Change:       $0"));
+        CHECK_THAT(stream.str(), Catch::Contains("Time: "));
+        CHECK_THAT(stream.str(), Catch::Contains("Gross price:  $0"));
+        CHECK_THAT(stream.str(), Catch::Contains("Sales tax:    $0"));
+        CHECK_THAT(stream.str(), Catch::Contains("Net price:    $0"));
+        CHECK_THAT(stream.str(), Catch::Contains("Cash payment: $0"));
+        CHECK_THAT(stream.str(), Catch::Contains("Change:       $0"));
     }
 
     SECTION("No discount")
@@ -81,13 +81,13 @@ TEST_CASE("Receipt printer gives correct output")
         );
         receiptPrinter.handleSaleEvent(event);
 
-        REQUIRE_THAT(stream.str(), Catch::Matches("(?:.|\n)*\n01 Test item\\s*\\$5\n(?:.|\n)*"));
-        REQUIRE_THAT(stream.str(), Catch::Contains("Time: "));
-        REQUIRE_THAT(stream.str(), Catch::Contains("$5"));
-        REQUIRE_THAT(stream.str(), Catch::Contains("Gross price:  $5"));
-        REQUIRE_THAT(stream.str(), Catch::Contains("Sales tax:    $2"));
-        REQUIRE_THAT(stream.str(), Catch::Contains("Net price:    $7"));
-        REQUIRE_THAT(stream.str(), Catch::Contains("Cash payment: $10"));
-        REQUIRE_THAT(stream.str(), Catch::Contains("Change:       $3"));
+        CHECK_THAT(stream.str(), Catch::Matches("(?:.|\n)*\n01 Test item\\s*\\$5\n(?:.|\n)*"));
+        CHECK_THAT(stream.str(), Catch::Contains("Time: "));
+        CHECK_THAT(stream.str(), Catch::Contains("$5"));
+        CHECK_THAT(stream.str(), Catch::Contains("Gross price:  $5"));
+        CHECK_THAT(stream.str(), Catch::Contains("Sales tax:    $2"));
+        CHECK_THAT(stream.str(), Catch::Contains("Net price:    $7"));
+        CHECK_THAT(stream.str(), Catch::Contains("Cash payment: $10"));
+        CHECK_THAT(stream.str(), Catch::Contains("Change:       $3"));
     }
 }

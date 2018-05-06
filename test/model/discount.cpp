@@ -6,8 +6,15 @@ TEST_CASE("Default discount is a no-op")
     model::Discount none;
     util::Amount zero(0), ten(10);
 
-    REQUIRE(none.applyTo(zero) == 0.0);
-    REQUIRE(none.applyTo(ten) == 10.0);
+    SECTION("On zero")
+    {
+        REQUIRE(none.applyTo(zero) == 0.0);
+    }
+
+    SECTION("On ten")
+    {
+        REQUIRE(none.applyTo(ten) == 10.0);
+    }
 }
 
 TEST_CASE("Discounts can be used on amounts")

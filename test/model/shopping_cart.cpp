@@ -29,14 +29,14 @@ TEST_CASE("Shopping cart works with items")
     {
         cart.addIfValid(itemId, 2);
         auto iter = cart.begin();
-        REQUIRE(iter->first == itemId);
-        REQUIRE(iter->second.getQuantity() == 2);
-        REQUIRE(++iter == cart.end());
+        CHECK(iter->first == itemId);
+        CHECK(iter->second.getQuantity() == 2);
+        CHECK(++iter == cart.end());
         cart.addIfValid(itemId, 2);
         iter = cart.begin();
-        REQUIRE(iter->first == itemId);
-        REQUIRE(iter->second.getQuantity() == 4);
-        REQUIRE(++iter == cart.end());
+        CHECK(iter->first == itemId);
+        CHECK(iter->second.getQuantity() == 4);
+        CHECK(++iter == cart.end());
     }
 
     SECTION("Gross price and summary is correct")
