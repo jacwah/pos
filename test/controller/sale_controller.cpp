@@ -12,7 +12,7 @@ TEST_CASE("Sale controller")
     SECTION("With items")
     {
         integration::ItemId validItemId(1);
-        shoppingCart.addIfValid(validItemId, 1);
+        shoppingCart.addItem(validItemId, 1);
         controller::SaleController saleController(
                 shoppingCart,
                 discountRules,

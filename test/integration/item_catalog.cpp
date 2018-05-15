@@ -8,14 +8,27 @@ TEST_CASE("Item catalog")
     SECTION("Finds valid ids")
     {
         integration::ItemId validId(1);
-        util::optional<integration::Item> item = itemCatalog.find(validId);
-        REQUIRE(item);
+        REQUIRE_NOTHROW(itemCatalog.find(validId));
     }
 
     SECTION("Does not find invalid ids")
     {
         integration::ItemId invalidId(0);
-        util::optional<integration::Item> item = itemCatalog.find(invalidId);
-        REQUIRE_FALSE(item);
+
+        SECTION("Correct message")
+        {
+            REQUIRE_THROWS_WITH(
+                itemCatalog.find(invalidId),
+                "Could not find item 0"
+            );
+        }
+
+        SECTION("Correct type")
+        {
+            REQUIRE_THROWS_AS(
+                itemCatalog.find(invalidId),
+                integration::InvalidItemIdExpection
+            );
+        }
     }
 }

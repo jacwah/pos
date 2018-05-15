@@ -10,18 +10,17 @@ namespace model {
  * Represents a summary of state of a {@link model::ShoppingCart}.
  */
 class ShoppingCartSummary {
-    util::optional<integration::Item> lastAddedItem;
+    integration::Item lastAddedItem;
     util::Amount grossPrice;
 
 public:
     /**
      * Creates a new instance.
      *
-     * @param item The item last added to the shopping cart. If no item was
-     *             was added, this is nothing.
+     * @param item The item last added to the shopping cart.
      * @param grossPrice The gross price of all items in the shopping cart.
      */
-    ShoppingCartSummary(util::optional<integration::Item> item, util::Amount grossPrice)
+    ShoppingCartSummary(integration::Item item, util::Amount grossPrice)
         : lastAddedItem(item)
         , grossPrice(grossPrice)
     {}
@@ -29,9 +28,9 @@ public:
     /**
      * Gets the last added item.
      *
-     * @return The last added item, or nothing if no item was added.
+     * @return The last added item.
      */
-    const util::optional<integration::Item> getLastAddedItem() const
+    const integration::Item getLastAddedItem() const
     {
         return lastAddedItem;
     }

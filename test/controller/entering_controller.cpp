@@ -16,14 +16,13 @@ TEST_CASE("Entering controller")
 
     SECTION("Adding a valid item")
     {
-        integration::Item expectedItem = *catalogCreator.getItemCatalog().find(validItemId);
+        integration::Item expectedItem = catalogCreator.getItemCatalog().find(validItemId);
         model::ShoppingCartSummary summary =
             enteringController.enterItem(validItemId, 1);
 
         SECTION("Correct lastAddedItem")
         {
-            REQUIRE(summary.getLastAddedItem());
-            integration::Item addedItem = *summary.getLastAddedItem();
+            integration::Item addedItem = summary.getLastAddedItem();
             CHECK(addedItem.getDescription() == expectedItem.getDescription());
             CHECK(addedItem.getPrice() == expectedItem.getPrice());
         }
@@ -36,17 +35,9 @@ TEST_CASE("Entering controller")
 
     SECTION("Adding an invalid item")
     {
-        model::ShoppingCartSummary summary =
-            enteringController.enterItem(invalidItemId, 1);
-
-        SECTION("Correct lastAddedItem")
-        {
-            REQUIRE_FALSE(summary.getLastAddedItem());
-        }
-
-        SECTION("Correct gross price")
-        {
-            REQUIRE(summary.getGrossPrice() == 0.0);
-        }
+        CHECK_THROWS_AS(
+            enteringController.enterItem(invalidItemId, 1),
+            integration::InvalidItemIdExpection
+        );
     }
 }

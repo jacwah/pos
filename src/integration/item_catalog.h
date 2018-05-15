@@ -5,6 +5,24 @@
 
 namespace integration {
 
+class InvalidItemIdExpection : public std::exception {
+    ItemId id;
+    std::string message;
+
+public:
+    InvalidItemIdExpection(ItemId id)
+        : id(id)
+        , message("Could not find item ")
+    {
+        message.append(std::to_string(id));
+    }
+
+    const char *what() const throw()
+    {
+        return message.c_str();
+    }
+};
+
 /**
  * Holds the items that can be sold. Is used to interface with the external
  * database.
@@ -15,14 +33,15 @@ public:
      * Searches for an item in the database.
      *
      * @param id Identifies the sought item.
-     * @return A description of the sought item, or nothing if not found.
+     * @return A description of the sought item.
+     * @throws InvalidItemIdExpection If the requested item cannot be found.
      */
-    util::optional<Item> find(ItemId id)
+    Item find(ItemId id)
     {
         switch (id) {
             case 1: return Item("Milk", 1);
             case 2: return Item("Bread", 2);
-            default: return {};
+            default: throw InvalidItemIdExpection(id);
         }
     }
 };

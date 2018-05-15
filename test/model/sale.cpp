@@ -34,8 +34,8 @@ TEST_CASE("Sale")
 
         model::ShoppingCart shoppingCart(itemCatalog);
         integration::ItemId itemId(1);
-        integration::Item item = *itemCatalog.find(itemId);
-        shoppingCart.addIfValid(integration::ItemId(1), 2);
+        integration::Item item = itemCatalog.find(itemId);
+        shoppingCart.addItem(integration::ItemId(1), 2);
         model::Sale sale(shoppingCart);
 
         SECTION("Net price")

@@ -6,11 +6,9 @@ TEST_CASE("Shopping cart works with items")
     integration::ItemCatalog itemCatalog;
     integration::ItemId itemId(1);
     integration::ItemId itemId2(2);
-    integration::ItemId invalidId(0);
-    integration::Item item = *itemCatalog.find(itemId);
-    integration::Item item2 = *itemCatalog.find(itemId2);
+    integration::Item item = itemCatalog.find(itemId);
+    integration::Item item2 = itemCatalog.find(itemId2);
     model::ShoppingCart cart(itemCatalog);
-    model::ShoppingCartSummary summary({}, {});
 
     SECTION("ItemRecords can increment quantity")
     {
@@ -27,12 +25,12 @@ TEST_CASE("Shopping cart works with items")
 
     SECTION("Can add multiple items after inital addition")
     {
-        cart.addIfValid(itemId, 2);
+        cart.addItem(itemId, 2);
         auto iter = cart.begin();
         CHECK(iter->first == itemId);
         CHECK(iter->second.getQuantity() == 2);
         CHECK(++iter == cart.end());
-        cart.addIfValid(itemId, 2);
+        cart.addItem(itemId, 2);
         iter = cart.begin();
         CHECK(iter->first == itemId);
         CHECK(iter->second.getQuantity() == 4);
@@ -42,20 +40,26 @@ TEST_CASE("Shopping cart works with items")
     SECTION("Gross price and summary is correct")
     {
         util::Amount correctPrice = item.getPrice() * 3 + item2.getPrice() * 4;
-        summary = cart.addIfValid(itemId, 3);
-        CHECK(summary.getLastAddedItem()->getDescription() == item.getDescription());
-        CHECK(summary.getLastAddedItem()->getPrice() == item.getPrice());
-        summary = cart.addIfValid(itemId2, 4);
-        CHECK(summary.getLastAddedItem()->getDescription() == item2.getDescription());
-        CHECK(summary.getLastAddedItem()->getPrice() == item2.getPrice());
+        auto summary = cart.addItem(itemId, 3);
+        CHECK(summary.getLastAddedItem().getDescription() == item.getDescription());
+        CHECK(summary.getLastAddedItem().getPrice() == item.getPrice());
+        summary = cart.addItem(itemId2, 4);
+        CHECK(summary.getLastAddedItem().getDescription() == item2.getDescription());
+        CHECK(summary.getLastAddedItem().getPrice() == item2.getPrice());
         CHECK(cart.calculateGrossPrice() == Approx(correctPrice));
         CHECK(summary.getGrossPrice() == Approx(correctPrice));
     }
 
-    SECTION("Invalid id is indicated with no last added")
+    SECTION("Still empty after invalid add")
     {
-        summary = cart.addIfValid(invalidId, 1);
-        CHECK_FALSE(summary.getLastAddedItem());
-        CHECK(summary.getGrossPrice() == util::Amount(0));
+        integration::ItemId invalidId(0);
+
+        REQUIRE_THROWS_AS(
+            cart.addItem(invalidId, 1),
+            integration::InvalidItemIdExpection
+        );
+
+        CHECK(cart.calculateGrossPrice() == 0.0);
+        CHECK(cart.begin() == cart.end());
     }
 }

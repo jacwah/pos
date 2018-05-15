@@ -91,25 +91,23 @@ public:
     }
 
     /**
-     * Adds the identified item to the cart if found.
+     * Adds the identified item to the cart.
      *
      * @param id Identifies the item to be added.
      * @param quantity The number of the items to add.
      * @return A summary of the state of the shopping cart.
+     * @throws InvalidItemId If <code>id</code> is invalid.
      */
-    ShoppingCartSummary addIfValid(integration::ItemId id, int quantity)
+    ShoppingCartSummary addItem(integration::ItemId id, int quantity)
     {
         auto item = itemCatalog.find(id);
+        auto iterator = items.find(id);
 
-        if (item) {
-            auto iterator = items.find(id);
-
-            if (iterator == items.end()) {
-                ItemRecord record(*item, quantity);
-                items.emplace(std::make_pair(id, record));
-            } else {
-                iterator->second.incrementQuantity(quantity);
-            }
+        if (iterator == items.end()) {
+            ItemRecord record(item, quantity);
+            items.emplace(std::make_pair(id, record));
+        } else {
+            iterator->second.incrementQuantity(quantity);
         }
 
         return ShoppingCartSummary(item, calculateGrossPrice());

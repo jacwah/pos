@@ -94,13 +94,14 @@ void TerminalView::runSingle()
             if (quantity < 1) {
                 std::cout << "Error: quantity must be positive" << std::endl;
             } else {
-                model::ShoppingCartSummary summary = enteringController.enterItem(itemId, quantity);
-                util::optional<integration::Item> item = summary.getLastAddedItem();
-
-                if (item)
-                    std::cout << "Added " << quantity << " " << item->getDescription() << std::endl;
-                else
+                try {
+                    model::ShoppingCartSummary summary = enteringController.enterItem(itemId, quantity);
+                    auto item = summary.getLastAddedItem();
+                    std::cout << "Added " << quantity << " " << item.getDescription() << std::endl;
+                }
+                catch (integration::InvalidItemIdExpection) {
                     std::cout << "Error: item not found" << std::endl;
+                }
             }
 
         }
