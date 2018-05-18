@@ -92,7 +92,7 @@ void TerminalView::runSingle()
             integration::ItemId itemId = record->getItemId();
 
             if (quantity < 1) {
-                std::cout << "Error: quantity must be positive" << std::endl;
+                errorMessageHandler.displayError("Quantity must be positive.");
             } else {
                 try {
                     model::ShoppingCartSummary summary = enteringController.enterItem(itemId, quantity);
@@ -100,7 +100,10 @@ void TerminalView::runSingle()
                     std::cout << "Added " << quantity << " " << item.getDescription() << std::endl;
                 }
                 catch (integration::InvalidItemIdException) {
-                    std::cout << "Error: item not found" << std::endl;
+                    errorMessageHandler.displayError("Item not found.");
+                }
+                catch (controller::OperationFailedException) {
+                    errorMessageHandler.displayError("Operation failed. Please try again later.");
                 }
             }
 
@@ -119,7 +122,7 @@ void TerminalView::runSingle()
             saleController.requestDiscount(customerId);
             std::cout << "Net price: " << saleController.getNetPrice() << std::endl;
         } catch (const std::logic_error& error) {
-            std::cout << "Syntax error! (" << error.what() << ")" << std::endl;
+            errorMessageHandler.displayError("Syntax error.");
         }
     }
 
@@ -136,7 +139,7 @@ void TerminalView::runSingle()
             std::cout << "Change: " << *change << std::endl;
             finished = true;
         } else {
-            std::cout << "Error: insufficient amount!" << std::endl;
+            errorMessageHandler.displayError("Insufficient amount.");
         }
     }
 }

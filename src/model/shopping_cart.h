@@ -97,6 +97,7 @@ public:
      * @param quantity The number of the items to add.
      * @return A summary of the state of the shopping cart.
      * @throws InvalidItemId If <code>id</code> is invalid.
+     * @throws DatabaseErrorException If there was an error in the database.
      */
     ShoppingCartSummary addItem(integration::ItemId id, int quantity)
     {

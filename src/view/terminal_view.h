@@ -2,6 +2,7 @@
 
 #include "controller/sale_controller_factory.h"
 #include "model/shopping_cart_factory.h"
+#include "view/error_message_handler.h"
 
 namespace view {
 
@@ -11,6 +12,7 @@ namespace view {
 class TerminalView {
     controller::SaleControllerFactory saleControllerFactory;
     model::ShoppingCartFactory shoppingCartFactory;
+    view::ErrorMessageHandler errorMessageHandler;
 
 public:
     /**

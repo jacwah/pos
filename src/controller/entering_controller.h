@@ -2,6 +2,7 @@
 
 #include "controller/sale_controller.h"
 #include "controller/sale_controller_factory.h"
+#include "controller/operation_failed_exception.h"
 #include "model/shopping_cart_factory.h"
 #include "model/shopping_cart.h"
 #include "integration/dto.h"
@@ -33,10 +34,16 @@ public:
      * @param quantity Specifies the number of items to be added.
      * @return A summary of the items added so far.
      * @throws InvalidItemIdException If the requested item could not be found.
+     * @throws OperationFailedException If the operation failed for any other
+     *                                  reason.
      */
     model::ShoppingCartSummary enterItem(integration::ItemId id, int quantity)
     {
-        return shoppingCart.addItem(id, quantity);
+        try {
+            return shoppingCart.addItem(id, quantity);
+        } catch (integration::DatabaseErrorException& databaseError) {
+            throw OperationFailedException("Database error");
+        }
     }
 
     /**
