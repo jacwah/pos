@@ -18,7 +18,9 @@ class ItemIdRecord {
     {}
 
 public:
-    static util::optional<ItemIdRecord> parse(const std::string& string)
+    static util::optional<ItemIdRecord> parse(
+            const std::string& string,
+            ErrorMessageHandler errorMessageHandler)
     {
         try {
             size_t len = 0;
@@ -32,7 +34,7 @@ public:
 
             return ItemIdRecord(itemId, quantity);
         } catch (const std::logic_error& error) {
-            std::cout << "Syntax error! (" << error.what() << ")" << std::endl;
+            errorMessageHandler.displayError("Syntax error.");
             return {};
         }
     }
@@ -48,21 +50,17 @@ public:
     }
 };
 
-static util::optional<int> parseInt(const std::string& string)
-{
-    try {
-        return std::stoi(string);
-    } catch (const std::logic_error& error) {
-        std::cout << "Syntax error! (" << error.what() << ")" << std::endl;
-        return {};
-    }
-}
-
-static util::optional<int> getAndParseInt()
+util::optional<int> TerminalView::getAndParseInt()
 {
     std::string input;
     std::getline(std::cin, input);
-    return parseInt(input);
+
+    try {
+        return std::stoi(input);
+    } catch (const std::logic_error& error) {
+        errorMessageHandler.displayError("Syntax error.");
+        return {};
+    }
 }
 
 void TerminalView::runLoop()
@@ -75,7 +73,7 @@ void TerminalView::runLoop()
     std::cout << std::endl;
 }
 
-void TerminalView::handleException(const char *userMessage, const std::exception& exception)
+void TerminalView::handleSystemError(const char *userMessage, const std::exception& exception)
 {
     util::Logger::getInstance().logException(exception);
     errorMessageHandler.displayError(userMessage);
@@ -93,7 +91,7 @@ void TerminalView::runSingle()
         if (line.empty())
             break;
 
-        util::optional<ItemIdRecord> record = ItemIdRecord::parse(line);
+        util::optional<ItemIdRecord> record = ItemIdRecord::parse(line, errorMessageHandler);
 
         if (record) {
             int quantity = record->getQuatity();
@@ -108,10 +106,10 @@ void TerminalView::runSingle()
                     std::cout << "Added " << quantity << " " << item.getDescription() << std::endl;
                 }
                 catch (const integration::InvalidItemIdException& exception) {
-                    handleException("Item not found.", exception);
+                    errorMessageHandler.displayError("Item not found.");
                 }
                 catch (const controller::OperationFailedException& exception) {
-                    handleException(
+                    handleSystemError(
                             "Operation failed. Please try again later.",
                             exception);
                 }
@@ -132,7 +130,7 @@ void TerminalView::runSingle()
             saleController.requestDiscount(customerId);
             std::cout << "Net price: " << saleController.getNetPrice() << std::endl;
         } catch (const std::logic_error& error) {
-            handleException("Syntax error.", error);
+            errorMessageHandler.displayError("Syntax error.");
         }
     }
 

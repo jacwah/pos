@@ -14,7 +14,8 @@ class TerminalView {
     model::ShoppingCartFactory shoppingCartFactory;
     view::ErrorMessageHandler errorMessageHandler;
 
-    void handleException(const char *userMessage, const std::exception& exception);
+    void handleSystemError(const char *userMessage, const std::exception& exception);
+    util::optional<int> getAndParseInt();
 
 public:
     /**
