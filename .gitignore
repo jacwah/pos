@@ -1,5 +1,6 @@
 pos
 run-test
+exceptions.txt
 
 *.d
 *.o

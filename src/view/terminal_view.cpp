@@ -3,6 +3,7 @@
 #include "controller/sale_controller.h"
 #include "integration/dto.h"
 #include "util/optional.h"
+#include "util/logger.h"
 #include <iostream>
 
 namespace view {
@@ -74,9 +75,16 @@ void TerminalView::runLoop()
     std::cout << std::endl;
 }
 
+void TerminalView::handleException(const char *userMessage, const std::exception& exception)
+{
+    util::Logger::getInstance().logException(exception);
+    errorMessageHandler.displayError(userMessage);
+}
+
 void TerminalView::runSingle()
 {
-    std::cout << "Enter item id, optionally followed by a separator and then quantity." << std::endl
+    std::cout
+        << "Enter item id, optionally followed by a separator and then quantity." << std::endl
         << "Enter blank line to finalize sale." << std::endl;
 
     controller::EnteringController enteringController(shoppingCartFactory);
@@ -99,11 +107,13 @@ void TerminalView::runSingle()
                     auto item = summary.getLastAddedItem();
                     std::cout << "Added " << quantity << " " << item.getDescription() << std::endl;
                 }
-                catch (integration::InvalidItemIdException) {
-                    errorMessageHandler.displayError("Item not found.");
+                catch (const integration::InvalidItemIdException& exception) {
+                    handleException("Item not found.", exception);
                 }
-                catch (controller::OperationFailedException) {
-                    errorMessageHandler.displayError("Operation failed. Please try again later.");
+                catch (const controller::OperationFailedException& exception) {
+                    handleException(
+                            "Operation failed. Please try again later.",
+                            exception);
                 }
             }
 
@@ -122,7 +132,7 @@ void TerminalView::runSingle()
             saleController.requestDiscount(customerId);
             std::cout << "Net price: " << saleController.getNetPrice() << std::endl;
         } catch (const std::logic_error& error) {
-            errorMessageHandler.displayError("Syntax error.");
+            handleException("Syntax error.", error);
         }
     }
 
