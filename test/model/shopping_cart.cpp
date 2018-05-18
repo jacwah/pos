@@ -56,7 +56,7 @@ TEST_CASE("Shopping cart works with items")
 
         REQUIRE_THROWS_AS(
             cart.addItem(invalidId, 1),
-            integration::InvalidItemIdExpection
+            integration::InvalidItemIdException
         );
 
         CHECK(cart.calculateGrossPrice() == 0.0);

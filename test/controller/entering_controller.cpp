@@ -37,7 +37,7 @@ TEST_CASE("Entering controller")
     {
         CHECK_THROWS_AS(
             enteringController.enterItem(invalidItemId, 1),
-            integration::InvalidItemIdExpection
+            integration::InvalidItemIdException
         );
     }
 }

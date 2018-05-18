@@ -5,12 +5,12 @@
 
 namespace integration {
 
-class InvalidItemIdExpection : public std::exception {
+class InvalidItemIdException : public std::exception {
     ItemId id;
     std::string message;
 
 public:
-    InvalidItemIdExpection(ItemId id)
+    InvalidItemIdException(ItemId id)
         : id(id)
         , message("Could not find item ")
     {
@@ -34,14 +34,14 @@ public:
      *
      * @param id Identifies the sought item.
      * @return A description of the sought item.
-     * @throws InvalidItemIdExpection If the requested item cannot be found.
+     * @throws InvalidItemIdException If the requested item cannot be found.
      */
     Item find(ItemId id)
     {
         switch (id) {
             case 1: return Item("Milk", 1);
             case 2: return Item("Bread", 2);
-            default: throw InvalidItemIdExpection(id);
+            default: throw InvalidItemIdException(id);
         }
     }
 };

@@ -27,7 +27,7 @@ TEST_CASE("Item catalog")
         {
             REQUIRE_THROWS_AS(
                 itemCatalog.find(invalidId),
-                integration::InvalidItemIdExpection
+                integration::InvalidItemIdException
             );
         }
     }

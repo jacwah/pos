@@ -99,7 +99,7 @@ void TerminalView::runSingle()
                     auto item = summary.getLastAddedItem();
                     std::cout << "Added " << quantity << " " << item.getDescription() << std::endl;
                 }
-                catch (integration::InvalidItemIdExpection) {
+                catch (integration::InvalidItemIdException) {
                     std::cout << "Error: item not found" << std::endl;
                 }
             }

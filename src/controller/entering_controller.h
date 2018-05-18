@@ -32,7 +32,7 @@ public:
      * @param id An identifier for the item to be added.
      * @param quantity Specifies the number of items to be added.
      * @return A summary of the items added so far.
-     * @throws InvalidItemIdExpection If the requested item could not be found.
+     * @throws InvalidItemIdException If the requested item could not be found.
      */
     model::ShoppingCartSummary enterItem(integration::ItemId id, int quantity)
     {
