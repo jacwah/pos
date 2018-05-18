@@ -38,11 +38,14 @@ test: $(TEST_TARGET)
 $(TEST_TARGET): $(SRC_OBJ) $(TEST_OBJ)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
+.PHONY: cleandep
+cleandep:
+	$(RM) $(DEP)
+
 .PHONY: clean
-clean:
+clean: cleandep
 	$(RM) $(TARGET)
 	$(RM) $(TEST_TARGET)
 	$(RM) $(SRC_OBJ)
 	$(RM) $(STARTUP_OBJ)
 	$(RM) $(TEST_OBJ)
-	$(RM) $(DEP)
