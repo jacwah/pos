@@ -1,5 +1,6 @@
 #include <iostream>
 #include "view/terminal_view.h"
+#include "view/total_revenue_view.h"
 #include "controller/sale_controller_factory.h"
 #include "model/discount_rules.h"
 #include "model/shopping_cart_factory.h"
@@ -12,6 +13,7 @@ namespace startup {
 static model::SaleLog setupSaleLogging()
 {
     auto observers = integration::createSaleObservers();
+    observers.emplace_back(std::make_unique<view::TotalRevenueView>());
     model::SaleLog log;
 
     for (auto& observer : observers)
