@@ -118,7 +118,7 @@ void TerminalView::runSingle()
         }
     }
 
-    controller::SaleController saleController = enteringController.finish(saleControllerFactory);
+    controller::SaleController saleController = enteringController.finish(saleControllerBuilder);
     std::cout << "Net price: " << saleController.getNetPrice() << std::endl;
 
     std::cout << "Enter customer id or empty> ";

@@ -8,12 +8,12 @@
 namespace controller {
 
 /**
- * A factory class for creating {@link controller::SaleControllerFactory}
+ * A builder class for creating {@link controller::SaleControllerFactory}
  * instances.
  */
-class SaleControllerFactory {
-    model::DiscountRules& discountRules;
-    model::SaleLog& saleLog;
+class SaleControllerBuilder {
+    std::shared_ptr<model::DiscountRules> discountRules;
+    std::shared_ptr<model::SaleLog> saleLog;
 
 public:
     /**
@@ -21,22 +21,32 @@ public:
      *
      * @param discountRules The rules that should govern discounts in all sales
      *                      handled by controllers created with this instance.
+     */
+    SaleControllerBuilder(
+            std::shared_ptr<model::DiscountRules> discountRules)
+        : discountRules(discountRules)
+    {
+        saleLog = std::make_shared<model::SaleLog>();
+    }
+
+    /**
+     * Sets the {@link model::SaleLog} to use for new controllers created by
+     * this object.
+     *
      * @param saleLog The log where sales completed by controllers created with
      *                this instance should be recorded.
      */
-    SaleControllerFactory(
-            model::DiscountRules& discountRules,
-            model::SaleLog& saleLog)
-        : discountRules(discountRules)
-        , saleLog(saleLog)
-    {}
+    void setSaleLog(std::shared_ptr<model::SaleLog> saleLog)
+    {
+        this->saleLog = saleLog;
+    }
 
     /**
      * Creates a new {@link controller::SaleController} instance.
      *
      * @param shoppingCart An object containing the items to be sold.
      */
-    SaleController create(const model::ShoppingCart& shoppingCart)
+    SaleController build(const model::ShoppingCart& shoppingCart)
     {
         return {shoppingCart, discountRules, saleLog};
     }

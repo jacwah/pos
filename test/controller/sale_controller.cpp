@@ -4,8 +4,8 @@
 TEST_CASE("Sale controller")
 {
     integration::CatalogCreator catalogCreator;
-    model::DiscountRules discountRules(catalogCreator);
-    model::SaleLog saleLog;
+    auto discountRules = std::make_shared<model::DiscountRules>(catalogCreator);
+    auto saleLog = std::make_shared<model::SaleLog>();
     model::ShoppingCart shoppingCart(catalogCreator.getItemCatalog());
     integration::CustomerId validCustomerId(1);
 

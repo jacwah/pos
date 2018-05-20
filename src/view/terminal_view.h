@@ -1,6 +1,6 @@
 #pragma once
 
-#include "controller/sale_controller_factory.h"
+#include "controller/sale_controller_builder.h"
 #include "model/shopping_cart_factory.h"
 #include "view/error_message_handler.h"
 
@@ -10,8 +10,8 @@ namespace view {
  * A terminal interface for the system.
  */
 class TerminalView {
-    controller::SaleControllerFactory saleControllerFactory;
-    model::ShoppingCartFactory shoppingCartFactory;
+    controller::SaleControllerBuilder& saleControllerBuilder;
+    model::ShoppingCartFactory& shoppingCartFactory;
     view::ErrorMessageHandler errorMessageHandler;
 
     void handleSystemError(const char *userMessage, const std::exception& exception);
@@ -21,7 +21,7 @@ public:
     /**
      * Creates a new instance.
      *
-     * @param saleControllerFactory A factory from which any
+     * @param saleControllerBuilder A builder from which any
      *                              {@link controller::SaleController}
      *                              instances will be created.
      * @param shoppingCartFactory A factory from which any
@@ -29,9 +29,9 @@ public:
      *                            will be created.
      */
     TerminalView(
-            controller::SaleControllerFactory saleControllerFactory,
-            model::ShoppingCartFactory shoppingCartFactory)
-        : saleControllerFactory(saleControllerFactory)
+            controller::SaleControllerBuilder& saleControllerBuilder,
+            model::ShoppingCartFactory& shoppingCartFactory)
+        : saleControllerBuilder(saleControllerBuilder)
         , shoppingCartFactory(shoppingCartFactory)
     {}
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "controller/sale_controller.h"
-#include "controller/sale_controller_factory.h"
+#include "controller/sale_controller_builder.h"
 #include "controller/operation_failed_exception.h"
 #include "model/shopping_cart_factory.h"
 #include "model/shopping_cart.h"
@@ -50,13 +50,13 @@ public:
      * Creates a {@link controller::SaleController} for administering
      * the sale of items added so far.
      *
-     * @param factory A factory used to create new
+     * @param builder A builder used to create new
      *                {@link controller::SaleController} instances.
      * @return A {@link controller::SaleController} for the items added so far.
      */
-    SaleController finish(SaleControllerFactory factory)
+    SaleController finish(SaleControllerBuilder builder)
     {
-        return factory.create(shoppingCart);
+        return builder.build(shoppingCart);
     }
 };
 

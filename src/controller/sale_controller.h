@@ -18,8 +18,8 @@ namespace controller {
  * model.
  */
 class SaleController {
-    model::DiscountRules& discountRules;
-    model::SaleLog& saleLog;
+    std::shared_ptr<model::DiscountRules> discountRules;
+    std::shared_ptr<model::SaleLog> saleLog;
     model::Sale sale;
 
 public:
@@ -34,8 +34,8 @@ public:
      */
     SaleController(
             const model::ShoppingCart& shoppingCart,
-            model::DiscountRules& discountRules,
-            model::SaleLog& saleLog)
+            std::shared_ptr<model::DiscountRules> discountRules,
+            std::shared_ptr<model::SaleLog> saleLog)
         : discountRules(discountRules)
         , saleLog(saleLog)
         , sale(shoppingCart)
@@ -50,7 +50,7 @@ public:
      */
     void requestDiscount(integration::CustomerId customerId)
     {
-        model::Discount discount = discountRules.getDiscountFor(customerId);
+        model::Discount discount = discountRules->getDiscountFor(customerId);
         sale.setDiscount(discount);
     }
 
@@ -63,7 +63,7 @@ public:
      */
     util::optional<util::Amount> payAndGetChange(util::Amount paidAmount)
     {
-        return sale.complete(paidAmount, saleLog);
+        return sale.complete(paidAmount, *saleLog);
     }
 
     /**
